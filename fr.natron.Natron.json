@@ -844,6 +844,7 @@
                     "commands": [
                         "cp ./CImg-v.2.2.3/CImg.h ./CImg",
                         "cp ./CImg-v.2.2.3/plugins/inpaint.h ./CImg/Inpaint"
+                        "patch -p0 -dCImg < CImg/Inpaint/inpaint.h.patch"
                     ]
                 }
             ],
