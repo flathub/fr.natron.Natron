@@ -1028,8 +1028,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-6.9.9-47.tar.xz",
-                            "sha256": "8ea6f3fccf07ba96ceadec845042828315285dbe5625701065d1e7403bf7aea7"
+                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-6.9.9-50.tar.xz",
+                            "sha256": "b6a8b6afea4cd0ea87e752a83bc66b13200e219e0a476156a83a259be3760560"
                         }
                     ],
                     "cleanup": [
