@@ -725,8 +725,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://www.ffmpeg.org/releases/ffmpeg-4.0.1.tar.xz",
-                    "sha256": "605f5c01c60db35d3b617a79cabb2c7032412be243554602eeed1b628125c0ee"
+                    "url": "https://www.ffmpeg.org/releases/ffmpeg-4.0.tar.xz",
+                    "sha256": "ed945daf40b124e77a685893cc025d086f638bc703183460aff49508edb3a43f"
                 }
             ],
             "cleanup": [
@@ -793,7 +793,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/openfx-io.git",
-                    "tag": "Natron-2.3.13"
+                    "tag": "Natron-2.3.12"
                 },
                 {
                     "type": "patch",
@@ -822,8 +822,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/devernay/openfx-misc.git",
-                    "tag": "Natron-2.3.13",
-                    "commit": "3ba3fff0c9edc318fced258dbe52d1b66f8ac0ed"
+                    "tag": "Natron-2.3.12",
+                    "commit": "f03c6c0d75dcc01034355c46760b98a8ff76691f"
                 },
                 {
                     "type": "patch",
@@ -835,15 +835,15 @@
                 },
                 {
                     "type": "archive",
-                    "url": "https://github.com/dtschump/CImg/archive/v.2.3.1.tar.gz",
-                    "sha256": "6d69ab031583d449c983b442f48c19653f4ea9fa11588569b106223dd6c63eef",
-                    "dest": "./CImg-v.2.3.1"
+                    "url": "https://github.com/dtschump/CImg/archive/v.2.2.3.tar.gz",
+                    "sha256": "27fecb165946894bb39ef6096ba50b3a7b51bfd9daa27b158ed71dbc3b1df5f7",
+                    "dest": "./CImg-v.2.2.3"
                 },
                 {
                     "type": "shell",
                     "commands": [
-                        "cp ./CImg-v.2.3.1/CImg.h ./CImg",
-                        "cp ./CImg-v.2.3.1/plugins/inpaint.h ./CImg/Inpaint",
+                        "cp ./CImg-v.2.2.3/CImg.h ./CImg",
+                        "cp ./CImg-v.2.2.3/plugins/inpaint.h ./CImg/Inpaint",
                         "patch -p0 -dCImg < CImg/Inpaint/inpaint.h.patch"
                     ]
                 }
@@ -870,8 +870,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/openfx-arena.git",
-                    "tag": "Natron-2.3.13",
-                    "commit": "c6ea556706acd04c17ddfaacf1e92bd299bc545e"
+                    "tag": "Natron-2.3.12",
+                    "commit": "50f9e1285ad7593f1d7dc26905e33943d0e9e95c"
                 },
                 {
                     "type": "patch",
@@ -884,7 +884,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/lvandeve/lodepng.git",
-                    "commit": "bd8f274fb51ef18b6d26b5f106ae4bef2150622e",
+                    "commit": "d03d7df9888aafb9c7f615895c34b05acf033908",
                     "dest": "./lodepng"
                 },
                 {
@@ -1028,8 +1028,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-6.9.10-3.tar.xz",
-                            "sha256": "92d15a4b617583998ce10dfa7aa85da2c5c216b4052a2d454aa50d07ee1e585a"
+                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-6.9.9-50.tar.xz",
+                            "sha256": "b6a8b6afea4cd0ea87e752a83bc66b13200e219e0a476156a83a259be3760560"
                         }
                     ],
                     "cleanup": [
@@ -1052,13 +1052,13 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/openfx-gmic.git",
-                    "tag": "Natron-2.3.13",
-                    "commit": "6c9bee1422e5a72ab7651bbc43ddf3794d153f16"
+                    "tag": "Natron-2.3.12",
+                    "commit": "36a4f2273f9fe822a7f889f2c5800568563a5c92"
                 },
                 {
                     "type": "file",
-                    "url": "http://gmic.eu/files/source/gmic_2.3.1.tar.gz",
-                    "sha256": "295c39bccdadc3d308d3f6a6e9fa55bbc648e180af5a0286da16320811e45328",
+                    "url": "http://gmic.eu/files/source/gmic_2.2.3.tar.gz",
+                    "sha256": "366e348ebfa85354e99b19eecf2e6b10d445901132eb73c84b18fb23af23f0e8",
                     "dest": "./"
                 },
                 {
@@ -1128,8 +1128,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/Natron.git",
-                    "tag": "2.3.13",
-                    "commit": "f57a7b0629e5048989660f3fef63c278d4922ca6"
+                    "tag": "2.3.12",
+                    "commit": "266fb270a00e65e0f559816cbfe9f776b535822b"
                 },
                 {
                     "type": "patch",
