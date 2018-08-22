@@ -93,6 +93,10 @@
         {
             "type": "patch",
             "path": "patches/qt4-aarch64.patch"
+        },
+        {
+            "type": "patch",
+            "path":"patches/fix-build-icu59.patch"
         }
     ],
     "cleanup": [
