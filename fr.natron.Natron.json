@@ -823,7 +823,7 @@
                     "type": "git",
                     "url": "https://github.com/devernay/openfx-misc.git",
                     "tag": "Natron-2.3.14",
-                    "commit": "3c007bf3b2f6b398df4fc29cfa1ecfe0e4639907"
+                    "commit": "9ccae7325ace4ac367a5121f8d3bf1b99e249ec1"
                 },
                 {
                     "type": "patch",
@@ -871,7 +871,7 @@
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/openfx-arena.git",
                     "tag": "Natron-2.3.14",
-                    "commit": "38e8e3a4bd0b450d785ea401f95dd90fb7c1335f"
+                    "commit": "2959d4f801a1d8d152f1e0b75331493c2547f805"
                 },
                 {
                     "type": "patch",
@@ -1129,7 +1129,7 @@
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/Natron.git",
                     "tag": "2.3.14",
-                    "commit": "5bbf5ed14d010eac3d7e4d414d4deceed404d18d"
+                    "commit": "a0979febfa9c5e9d7aebf71439479ebf6ba04d69"
                 },
                 {
                     "type": "patch",
