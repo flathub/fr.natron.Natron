@@ -400,8 +400,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/OpenImageIO/oiio/archive/Release-1.8.11.tar.gz",
-                    "sha256": "5a4d4a5480569d94bcaf759d1afa729881c90a2c1a30a5603c278d74ed0cae7e"
+                    "url": "https://github.com/OpenImageIO/oiio/archive/Release-1.8.13.tar.gz",
+                    "sha256": "24b93ebe6cc31aa92d3246b65ec66fcf626af32fcd4b04847c7f23c8e2adcabd"
                 }
             ],
             "cleanup": [
