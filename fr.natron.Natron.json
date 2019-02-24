@@ -43,14 +43,14 @@
     ],
     "build-options": {
         "env": {
-            "CXXFLAGS": "-std=gnu++98",
+            "CXXFLAGS": "-std=gnu++98 -O2",
             "LD_LIBRARY_PATH": "/run/build/qt4/lib/"
         }
     },
     "sources": [
         {
             "type": "archive",
-            "url": "https://download.qt.io/official_releases/qt/4.8/4.8.7/qt-everywhere-opensource-src-4.8.7.tar.gz",
+            "url": "https://download.qt.io/archive/qt/4.8/4.8.7/qt-everywhere-opensource-src-4.8.7.tar.gz",
             "sha256": "e2882295097e47fe089f8ac741a95fef47e0a73a3f3cdf21b56990638f626ea0"
         },
         {
@@ -92,11 +92,35 @@
         },
         {
             "type": "patch",
-            "path": "patches/qt4-aarch64.patch"
+            "path":"patches/fix-build-icu59.patch"
         },
         {
             "type": "patch",
-            "path":"patches/fix-build-icu59.patch"
+            "path": "patches/qt4-aarch64.patch"
+        },
+        {
+             "type": "patch",
+             "path": "patches/qt4-disable-sslv3.patch"
+        },
+        {
+            "type": "shell",
+            "commands": [
+                "sed -i \"s|-O2|${CXXFLAGS}|\" mkspecs/common/{g++,gcc}-base.conf",
+                "sed -i \"/^QMAKE_LFLAGS_RPATH/s| -Wl,-rpath,||g\" mkspecs/common/gcc-base-unix.conf",
+                "sed -i \"/^QMAKE_LFLAGS\s/s|+=|+= ${LDFLAGS}|g\" mkspecs/common/gcc-base.conf"
+            ]
+        },
+        {
+            "type": "file",
+            "path": "patches/qt4-openssl-1.1.patch"
+        },
+        {
+            "type": "shell",
+            "commands": [
+                "echo -e '#include<openssl/opensslv.h>\nint main(){return OPENSSL_VERSION_NUMBER>=0x010100000L?0:1;}' >has_openssl_1_1.c",
+                "gcc ${CFLAGS} has_openssl_1_1.c -o has_openssl_1_1",
+                "if ./has_openssl_1_1; then patch -p1 -i qt4-openssl-1.1.patch; fi"
+            ]
         }
     ],
     "cleanup": [
@@ -107,7 +131,10 @@
             "/lib/*.prl",
             "/lib/pkgconfig",
             "/lib/qt4/mkspecs",
-            "/lib/qt4/q3porting.xml"
+            "/lib/qt4/q3porting.xml",
+            "/mkspecs",
+            "/phrasebooks",
+            "q3porting.xml"
         ]
     },
     {
@@ -219,7 +246,8 @@
                 "/include",
                 "/cmake",
                 "/lib/pkgconfig",
-                "/share"
+                "/share",
+                "OpenColorIOConfig.cmake"
             ]
         },
         {
@@ -356,8 +384,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://www.libraw.org/data/LibRaw-0.18.9.tar.gz",
-                    "sha256": "d2ef177032e6d804fc512b206d02c393fca26be43ecd136cc26926407273b24e"
+                    "url": "https://www.libraw.org/data/LibRaw-0.19.2.tar.gz",
+                    "sha256": "400d47969292291d297873a06fb0535ccce70728117463927ddd9452aa849644"
                 },
                 {
                     "type": "archive",
@@ -422,13 +450,8 @@
             ],
             "sources": [
                 {
-                    "type": "archive",
-                    "url": "https://github.com/gpac/gpac/archive/v0.7.1.tar.gz",
-                    "sha256": "c7a18b9eea1264fee392e7222d16b180e0acdd6bb173ff6b8baadbf50b3b1d7f"
-                },
-                {
-                    "type": "patch",
-                    "path": "patches/gpac_ffmpeg_4.patch"
+                    "type": "git",
+                    "url": "https://github.com/gpac/gpac.git"
                 }
             ],
             "cleanup": [
@@ -484,7 +507,8 @@
             "cleanup": [
                 "src/SeExprEditor/generated/",
                 "src/SeExpr/generated/",
-                "/include"
+                "/include",
+                "/lib/*.a"
             ]
         },
         {
@@ -693,6 +717,27 @@
                     ]
                 },
                 {
+                     "name": "gdk-pixbuf",
+                     "buildsystem": "autotools",
+                     "config-opts": [
+                         "--disable-docs",
+                         "--disable-static",
+                         "--enable-shared",
+                         "--without-libtiff"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.12.tar.xz",
+                            "sha256": "fff85cf48223ab60e3c3c8318e2087131b590fd6f1737e42cb3759a3b427a334"
+                        }
+                    ],
+                    "cleanup": [
+                         "/bin",
+                         "/include"
+                    ]
+                },
+                {
                     "name": "imagemagic",
                     "config-opts": [
                         "--with-magick-plus-plus=yes",
@@ -729,8 +774,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-6.9.10-10.tar.xz",
-                            "sha256": "f09488e6d8e4c703609a3be4244690a5f533d765fd2b0822c05dbd6a6ae71c2c"
+                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-7.0.8-28.tar.xz",
+                            "sha256": "d7aeb906b1c6b8d3292d4a8a94f6ac58683e25d972bbb8ebae8b300d8d707a1b"
                         }
                     ],
                     "cleanup": [
@@ -823,7 +868,8 @@
             "name": "natron",
             "buildsystem": "qmake",
             "config-opts": [
-                "CONFIG+=stable"
+                "CONFIG+=stable",
+                "CONFIG+=enforce-gcc8"
             ],
             "sources": [
                 {
