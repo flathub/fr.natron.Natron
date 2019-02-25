@@ -1,7 +1,7 @@
 {
     "id": "fr.natron.Natron",
     "runtime": "org.freedesktop.Sdk",
-    "runtime-version": "1.6",
+    "runtime-version": "18.08",
     "sdk": "org.freedesktop.Sdk",
     "command": "Natron",
     "rename-icon": "natronIcon256_linux",
@@ -43,14 +43,14 @@
     ],
     "build-options": {
         "env": {
-            "CXXFLAGS": "-std=gnu++98",
+            "CXXFLAGS": "-std=gnu++98 -O2",
             "LD_LIBRARY_PATH": "/run/build/qt4/lib/"
         }
     },
     "sources": [
         {
             "type": "archive",
-            "url": "https://download.qt.io/official_releases/qt/4.8/4.8.7/qt-everywhere-opensource-src-4.8.7.tar.gz",
+            "url": "https://download.qt.io/archive/qt/4.8/4.8.7/qt-everywhere-opensource-src-4.8.7.tar.gz",
             "sha256": "e2882295097e47fe089f8ac741a95fef47e0a73a3f3cdf21b56990638f626ea0"
         },
         {
@@ -92,7 +92,35 @@
         },
         {
             "type": "patch",
+            "path":"patches/fix-build-icu59.patch"
+        },
+        {
+            "type": "patch",
             "path": "patches/qt4-aarch64.patch"
+        },
+        {
+             "type": "patch",
+             "path": "patches/qt4-disable-sslv3.patch"
+        },
+        {
+            "type": "shell",
+            "commands": [
+                "sed -i \"s|-O2|${CXXFLAGS}|\" mkspecs/common/{g++,gcc}-base.conf",
+                "sed -i \"/^QMAKE_LFLAGS_RPATH/s| -Wl,-rpath,||g\" mkspecs/common/gcc-base-unix.conf",
+                "sed -i \"/^QMAKE_LFLAGS\s/s|+=|+= ${LDFLAGS}|g\" mkspecs/common/gcc-base.conf"
+            ]
+        },
+        {
+            "type": "file",
+            "path": "patches/qt4-openssl-1.1.patch"
+        },
+        {
+            "type": "shell",
+            "commands": [
+                "echo -e '#include<openssl/opensslv.h>\nint main(){return OPENSSL_VERSION_NUMBER>=0x010100000L?0:1;}' >has_openssl_1_1.c",
+                "gcc ${CFLAGS} has_openssl_1_1.c -o has_openssl_1_1",
+                "if ./has_openssl_1_1; then patch -p1 -i qt4-openssl-1.1.patch; fi"
+            ]
         }
     ],
     "cleanup": [
@@ -103,7 +131,10 @@
             "/lib/*.prl",
             "/lib/pkgconfig",
             "/lib/qt4/mkspecs",
-            "/lib/qt4/q3porting.xml"
+            "/lib/qt4/q3porting.xml",
+            "/mkspecs",
+            "/phrasebooks",
+            "q3porting.xml"
         ]
     },
     {
@@ -215,7 +246,8 @@
                 "/include",
                 "/cmake",
                 "/lib/pkgconfig",
-                "/share"
+                "/share",
+                "OpenColorIOConfig.cmake"
             ]
         },
         {
@@ -352,8 +384,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://www.libraw.org/data/LibRaw-0.18.9.tar.gz",
-                    "sha256": "d2ef177032e6d804fc512b206d02c393fca26be43ecd136cc26926407273b24e"
+                    "url": "https://www.libraw.org/data/LibRaw-0.19.2.tar.gz",
+                    "sha256": "400d47969292291d297873a06fb0535ccce70728117463927ddd9452aa849644"
                 },
                 {
                     "type": "archive",
@@ -396,8 +428,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/OpenImageIO/oiio/archive/Release-1.8.11.tar.gz",
-                    "sha256": "5a4d4a5480569d94bcaf759d1afa729881c90a2c1a30a5603c278d74ed0cae7e"
+                    "url": "https://github.com/OpenImageIO/oiio/archive/Release-1.8.13.tar.gz",
+                    "sha256": "24b93ebe6cc31aa92d3246b65ec66fcf626af32fcd4b04847c7f23c8e2adcabd"
                 }
             ],
             "cleanup": [
@@ -418,320 +450,12 @@
             ],
             "sources": [
                 {
-                    "type": "archive",
-                    "url": "https://github.com/gpac/gpac/archive/v0.6.1.tar.gz",
-                    "sha256": "67d1ac8f8b3e74da0e4e38ea926dc15bca6e9941e8f366e3538abcf13c103c09"
+                    "type": "git",
+                    "url": "https://github.com/gpac/gpac.git"
                 }
             ],
             "cleanup": [
                 "*"
-            ]
-        },
-        {
-            "name": "nasm",
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://www.nasm.us/pub/nasm/releasebuilds/2.13.03/nasm-2.13.03.tar.xz",
-                    "sha256": "812ecfb0dcbc5bd409aaa8f61c7de94c5b8752a7b00c632883d15b2ed6452573"
-                }
-            ],
-            "cleanup": [
-                "*"
-            ]
-        },
-        {
-            "name": "x264",
-            "config-opts": [
-                "--enable-static",
-                "--enable-pic",
-                "--disable-cli"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://ftp.videolan.org/pub/x264/snapshots/x264-snapshot-20180407-2245-stable.tar.bz2",
-                    "sha256": "86ea8ecb515f1a6e67df4bba37345ea908a0ea7da587d4f74f8afb6c33642f2b"
-                },
-                {
-                    "type": "patch",
-                    "path": "patches/x264-gpac.patch"
-                }
-            ],
-            "cleanup": [
-                "/include",
-                "/lib/pkgconfig"
-            ]
-        },
-        {
-            "name": "libass",
-            "config-opts": [
-                "--disable-static"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/libass/libass/releases/download/0.14.0/libass-0.14.0.tar.xz",
-                    "sha256": "881f2382af48aead75b7a0e02e65d88c5ebd369fe46bc77d9270a94aa8fd38a2"
-                }
-            ],
-            "cleanup": [
-                "/include",
-                "/lib/*.la",
-                "/lib/pkgconfig"
-            ],
-            "modules": [
-                {
-                    "name": "frebidi",
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://dl.tingping.se/mirror/fribidi-0.19.7.tar.bz2",
-                            "sha256": "08222a6212bbc2276a2d55c3bf370109ae4a35b689acbc66571ad2a670595a8e"
-                        }
-                    ],
-                    "cleanup": [
-                        "/bin",
-                        "/include"
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "libbluray",
-            "config-opts": [
-                "--disable-static",
-                "--disable-bdjava",
-                "--disable-bdjava-jar"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://get.videolan.org/libbluray/1.0.2/libbluray-1.0.2.tar.bz2",
-                    "sha256": "6d9e7c4e416f664c330d9fa5a05ad79a3fb39b95adfc3fd6910cbed503b7aeff"
-                }
-            ],
-            "cleanup": [
-                "/lib/*.la",
-                "/include/libbluray"
-            ]
-        },
-        {
-            "name": "openh264",
-            "buildsystem": "simple",
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/cisco/openh264/archive/v1.7.0.tar.gz",
-                    "sha256": "9c07c38d7de00046c9c52b12c76a2af7648b70d05bd5460c8b67f6895738653f"
-                }
-            ],
-            "build-commands": [
-                "make HAVE_AVX2=No PREFIX=/app install"
-            ]
-        },
-        {
-            "name": "snappy",
-            "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DCMAKE_INSTALL_PREFIX=/app",
-                "-DBUILD_SHARED_LIBS=ON",
-                "-DSNAPPY_BUILD_TESTS=OFF",
-                "-DCMAKE_BUILD_TYPE=Release"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/google/snappy/archive/1.1.7.tar.gz",
-                    "sha256": "3dfa02e873ff51a11ee02b9ca391807f0c8ea0529a4924afa645fbf97163f9d4"
-                }
-            ],
-            "cleanup": [
-                "/include"
-            ]
-        },
-        {
-            "name": "mp3lame",
-            "config-opts": [
-                "--enable-mp3rtp",
-                "--disable-static",
-                "--enable-nasm"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://http.debian.net/debian/pool/main/l/lame/lame_3.100.orig.tar.gz",
-                    "sha256": "ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e"
-                }
-            ],
-            "cleanup": [
-                "/bin",
-                "/include",
-                "/lib/*.la"
-            ]
-        },
-        {
-            "name": "libmodplug",
-            "rm-configure": true,
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://sourceforge.net/projects/modplug-xmms/files/libmodplug/0.8.9.0/libmodplug-0.8.9.0.tar.gz",
-                    "sha256": "457ca5a6c179656d66c01505c0d95fafaead4329b9dbaa0f997d00a3508ad9de"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "autoreconf -fiv"
-                    ],
-                    "dest-filename": "autogen.sh"
-                }
-            ],
-            "cleanup": [
-                "/lib/*.la",
-                "/include"
-            ]
-        },
-        {
-            "name": "opus",
-            "config-opts": [
-                "--enable-static"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://archive.mozilla.org/pub/opus/opus-1.2.1.tar.gz",
-                    "sha256": "cfafd339ccd9c5ef8d6ab15d7e1a412c054bf4cb4ecbbbcc78c12ef2def70732"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "autoreconf -fiv"
-                    ],
-                    "dest-filename": "autogen.sh"
-                }
-            ],
-            "cleanup": [
-                "/include",
-                "/lib/*.la"
-            ]
-        },
-        {
-            "name": "soxr",
-            "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DBUILD_TESTS=no",
-                "-DCMAKE_BUILD_TYPE=Release"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://sourceforge.net/projects/soxr/files/soxr-0.1.3-Source.tar.xz",
-                    "sha256": "b111c15fdc8c029989330ff559184198c161100a59312f5dc19ddeb9b5a15889"
-                }
-            ],
-            "cleanup": [
-                "/include"
-            ]
-        },
-        {
-            "name": "x265",
-            "builddir": true,
-            "subdir": "source",
-            "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
-                "-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=true"
-            ],
-            "build-options": {
-                "arch": {
-                    "x86_64": {
-                        "config-opts": [
-                            "-DMAIN12=TRUE",
-                            "-DHIGH_BIT_DEPTH=TRUE"
-                        ]
-                    }
-                }
-            },
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://bitbucket.org/multicoreware/x265/downloads/x265_2.7.tar.gz",
-                    "sha256": "d5e75fa62ffe6ed49e691f8eb8ab8c1634ffcc0725dd553c6fdb4d5443b494a2"
-                }
-            ],
-            "cleanup": [
-                "/bin",
-                "/include"
-            ]
-        },
-        {
-            "name": "xvid",
-            "subdir": "build/generic",
-            "config-opts": [
-                "--enable-static"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://downloads.xvid.com/downloads/xvidcore-1.3.5.tar.gz",
-                    "sha256": "165ba6a2a447a8375f7b06db5a3c91810181f2898166e7c8137401d7fc894cf0"
-                }
-            ],
-            "cleanup": [
-                "/include"
-            ]
-        },
-        {
-            "name": "ffmpeg",
-            "config-opts": [
-                "--enable-pic",
-                "--enable-x86asm",
-                "--enable-swscale",
-                "--enable-avfilter",
-                "--enable-avresample",
-                "--enable-libmp3lame",
-                "--enable-libvorbis",
-                "--enable-libopus",
-                "--enable-librsvg",
-                "--enable-libtheora",
-                "--enable-libopenh264",
-                "--enable-libopenjpeg",
-                "--enable-libsnappy",
-                "--enable-libmodplug",
-                "--enable-libvpx",
-                "--enable-libsoxr",
-                "--enable-libspeex",
-                "--enable-libass",
-                "--enable-libbluray",
-                "--enable-lzma",
-                "--enable-gnutls",
-                "--enable-fontconfig",
-                "--enable-libfreetype",
-                "--enable-libfribidi",
-                "--disable-libxcb",
-                "--disable-libxcb-shm",
-                "--disable-libxcb-xfixes",
-                "--disable-indev=jack",
-                "--disable-outdev=xv",
-                "--disable-xlib",
-                
-                "--enable-gpl",
-                "--enable-libx264",
-                "--enable-libx265",
-                "--enable-libxvid",
-                "--enable-version3"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://www.ffmpeg.org/releases/ffmpeg-4.0.1.tar.xz",
-                    "sha256": "605f5c01c60db35d3b617a79cabb2c7032412be243554602eeed1b628125c0ee"
-                }
-            ],
-            "cleanup": [
-                "/include",
-                "/lib/pkgconfig"
             ]
         },
         {
@@ -783,7 +507,8 @@
             "cleanup": [
                 "src/SeExprEditor/generated/",
                 "src/SeExpr/generated/",
-                "/include"
+                "/include",
+                "/lib/*.a"
             ]
         },
         {
@@ -823,7 +548,7 @@
                     "type": "git",
                     "url": "https://github.com/devernay/openfx-misc.git",
                     "tag": "Natron-2.3.14",
-                    "commit": "3c007bf3b2f6b398df4fc29cfa1ecfe0e4639907"
+                    "commit": "9ccae7325ace4ac367a5121f8d3bf1b99e249ec1"
                 },
                 {
                     "type": "patch",
@@ -871,7 +596,7 @@
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/openfx-arena.git",
                     "tag": "Natron-2.3.14",
-                    "commit": "38e8e3a4bd0b450d785ea401f95dd90fb7c1335f"
+                    "commit": "2959d4f801a1d8d152f1e0b75331493c2547f805"
                 },
                 {
                     "type": "patch",
@@ -992,6 +717,27 @@
                     ]
                 },
                 {
+                     "name": "gdk-pixbuf",
+                     "buildsystem": "autotools",
+                     "config-opts": [
+                         "--disable-docs",
+                         "--disable-static",
+                         "--enable-shared",
+                         "--without-libtiff"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.12.tar.xz",
+                            "sha256": "fff85cf48223ab60e3c3c8318e2087131b590fd6f1737e42cb3759a3b427a334"
+                        }
+                    ],
+                    "cleanup": [
+                         "/bin",
+                         "/include"
+                    ]
+                },
+                {
                     "name": "imagemagic",
                     "config-opts": [
                         "--with-magick-plus-plus=yes",
@@ -1028,8 +774,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-6.9.10-8.tar.xz",
-                            "sha256": "991bccd1548f69c4ddf5ca4f7a826f816167555c8651311157a6337833864e50"
+                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-7.0.8-28.tar.xz",
+                            "sha256": "d7aeb906b1c6b8d3292d4a8a94f6ac58683e25d972bbb8ebae8b300d8d707a1b"
                         }
                     ],
                     "cleanup": [
@@ -1122,14 +868,15 @@
             "name": "natron",
             "buildsystem": "qmake",
             "config-opts": [
-                "CONFIG+=stable"
+                "CONFIG+=stable",
+                "CONFIG+=enforce-gcc8"
             ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/Natron.git",
                     "tag": "2.3.14",
-                    "commit": "5bbf5ed14d010eac3d7e4d414d4deceed404d18d"
+                    "commit": "a0979febfa9c5e9d7aebf71439479ebf6ba04d69"
                 },
                 {
                     "type": "patch",
