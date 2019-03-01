@@ -148,8 +148,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://sourceforge.net/projects/boost/files/boost/1.66.0/boost_1_66_0.tar.bz2",
-                    "sha256": "5721818253e6a0989583192f96782c4a98eb6204965316df9f5ad75819225ca9"
+                    "url": "https://sourceforge.net/projects/boost/files/boost/1.67.0/boost_1_67_0.tar.bz2",
+                    "sha256": "2684c972994ee57fc5632e03bf044746f6eb45d4920c343937a465fd67a5adba"
                 }
             ],
             "cleanup": [
@@ -717,6 +717,26 @@
                     ]
                 },
                 {
+                    "name": "cairo",
+                    "config-opts": [
+                        "--with-libpng=yes",
+                        "--enable-static",
+                        "--enable-tee"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://www.cairographics.org/releases/cairo-1.14.12.tar.xz",
+                            "sha256": "8c90f00c500b2299c0a323dd9beead2a00353752b2092ead558139bd67f7bf16"
+                        }
+                    ],
+                    "cleanup": [
+                        "/bin",
+                        "/include",
+                        "/lib/*.la"
+                    ]
+                },
+                {
                      "name": "gdk-pixbuf",
                      "buildsystem": "autotools",
                      "config-opts": [
@@ -730,6 +750,28 @@
                             "type": "archive",
                             "url": "http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.12.tar.xz",
                             "sha256": "fff85cf48223ab60e3c3c8318e2087131b590fd6f1737e42cb3759a3b427a334"
+                        }
+                    ],
+                    "cleanup": [
+                         "/bin",
+                         "/include"
+                    ]
+                },
+                {
+                    "name": "librsvg",
+                    "config-opts": [
+                        "--disable-docs",
+                        "--disable-static",
+                        "--enable-shared",
+                        "--disable-introspection",
+                        "--disable-vala",
+                        "--disable-pixbuf-loader"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://download.gnome.org/sources/librsvg/2.40/librsvg-2.40.20.tar.xz",
+                            "sha256": "cff4dd3c3b78bfe99d8fcfad3b8ba1eee3289a0823c0e118d78106be6b84c92b"
                         }
                     ],
                     "cleanup": [
@@ -774,8 +816,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-7.0.8-28.tar.xz",
-                            "sha256": "d7aeb906b1c6b8d3292d4a8a94f6ac58683e25d972bbb8ebae8b300d8d707a1b"
+                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-7.0.8-29.tar.xz",
+                            "sha256": "41590d506e2b4a7df7325934cb906db067d5cbb387c80fb05643186c8b6439e3"
                         }
                     ],
                     "cleanup": [
@@ -909,58 +951,6 @@
                 "mkdir -p /app/Plugins && cp -r ./Gui/Resources/PyPlugs /app/Plugins/PyPlugs",
                 "cp -r /app/lib/python2.7/site-packages/PySide /app/Plugins/PySide",
                 "cp -r ./Gui/Resources/etc/ /app"
-            ],
-            "modules": [
-                {
-                    "name": "freetype2",
-                    "config-opts": [
-                        "--disable-static"
-                    ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://sourceforge.net/projects/freetype/files/freetype2/2.9.1/freetype-2.9.1.tar.bz2",
-                            "sha256": "db8d87ea720ea9d5edc5388fc7a0497bb11ba9fe972245e0f7f4c7e8b1e1e84d"
-                        }
-                    ],
-                    "cleanup": [
-                        "/include"
-                    ]
-                },
-                {
-                    "name": "pixman",
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://www.cairographics.org/releases/pixman-0.34.0.tar.gz",
-                            "sha256": "21b6b249b51c6800dc9553b65106e1e37d0e25df942c90531d4c3997aa20a88e"
-                        }
-                    ],
-                    "cleanup": [
-                        "/include",
-                        "/lib/*.la"
-                    ]
-                },
-                {
-                    "name": "cairo",
-                    "config-opts": [
-                        "--with-libpng=yes",
-                        "--enable-static",
-                        "--enable-tee"
-                    ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://www.cairographics.org/releases/cairo-1.14.12.tar.xz",
-                            "sha256": "8c90f00c500b2299c0a323dd9beead2a00353752b2092ead558139bd67f7bf16"
-                        }
-                    ],
-                    "cleanup": [
-                        "/bin",
-                        "/include",
-                        "/lib/*.la"
-                    ]
-                }
             ]
         }
     ]
