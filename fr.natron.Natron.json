@@ -774,8 +774,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-7.0.8-28.tar.xz",
-                            "sha256": "d7aeb906b1c6b8d3292d4a8a94f6ac58683e25d972bbb8ebae8b300d8d707a1b"
+                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-7.0.8-29.tar.xz",
+                            "sha256": "41590d506e2b4a7df7325934cb906db067d5cbb387c80fb05643186c8b6439e3"
                         }
                     ],
                     "cleanup": [
@@ -911,36 +911,6 @@
                 "cp -r ./Gui/Resources/etc/ /app"
             ],
             "modules": [
-                {
-                    "name": "freetype2",
-                    "config-opts": [
-                        "--disable-static"
-                    ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://sourceforge.net/projects/freetype/files/freetype2/2.9.1/freetype-2.9.1.tar.bz2",
-                            "sha256": "db8d87ea720ea9d5edc5388fc7a0497bb11ba9fe972245e0f7f4c7e8b1e1e84d"
-                        }
-                    ],
-                    "cleanup": [
-                        "/include"
-                    ]
-                },
-                {
-                    "name": "pixman",
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://www.cairographics.org/releases/pixman-0.34.0.tar.gz",
-                            "sha256": "21b6b249b51c6800dc9553b65106e1e37d0e25df942c90531d4c3997aa20a88e"
-                        }
-                    ],
-                    "cleanup": [
-                        "/include",
-                        "/lib/*.la"
-                    ]
-                },
                 {
                     "name": "cairo",
                     "config-opts": [
