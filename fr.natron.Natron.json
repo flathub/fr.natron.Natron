@@ -104,6 +104,10 @@
              "path": "patches/qt4-disable-sslv3.patch"
         },
         {
+            "type": "patch",
+            "path": "patches/gcc9-qforeach.patch"
+        },
+        {
             "type": "shell",
             "commands": [
                 "sed -i \"s|-O2|${CXXFLAGS}|\" mkspecs/common/{g++,gcc}-base.conf",
