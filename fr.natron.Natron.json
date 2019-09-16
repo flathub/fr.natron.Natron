@@ -817,8 +817,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-7.0.8-29.tar.xz",
-                            "sha256": "41590d506e2b4a7df7325934cb906db067d5cbb387c80fb05643186c8b6439e3"
+                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-7.0.8-64.tar.xz",
+                            "sha256": "5f67f093b7d10af4e0d8e203714c2e0fdd0366b9004aeec68ea1c1183b88f967"
                         }
                     ],
                     "cleanup": [
