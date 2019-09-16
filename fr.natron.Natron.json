@@ -922,7 +922,6 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/Natron.git",
-                    "tag": "2.3.14",
                     "commit": "a0979febfa9c5e9d7aebf71439479ebf6ba04d69"
                 },
                 {
