@@ -933,6 +933,8 @@
             ],
             "post-install": [
                 "mv /app/share/mime/packages/x-natron.xml /app/share/mime/packages/fr.natron.Natron.xml",
+                "mkdir -p /app/share/metainfo",
+                "install -m664 -p ../fr.natron.Natron.appdata.xml /app/share/metainfo",
                 "install -Dm644 ./Gui/Resources/Images/natronIcon256_linux.png /app/share/icons/hicolor/256x256/apps/natronIcon256_linux.png",
                 "install -Dm644 ./Gui/Resources/Images/natronIcon.svg /app/share/icons/hicolor/scalable/apps/fr.natron.Natron.svg",
                 "install -Dm644 ./Gui/Resources/Images/natronProjectIcon_linux.png /app/share/icons/hicolor/256x256/mimetypes/fr.natron.Natron-project.png",
