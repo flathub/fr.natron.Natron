@@ -1,7 +1,7 @@
 {
     "id": "fr.natron.Natron",
     "runtime": "org.freedesktop.Sdk",
-    "runtime-version": "18.08",
+    "runtime-version": "19.08",
     "sdk": "org.freedesktop.Sdk",
     "command": "Natron",
     "rename-icon": "natronIcon256_linux",
@@ -15,6 +15,7 @@
     "modules": [
             "shared-modules/glew/glew.json",
             "shared-modules/glu/glu-9.0.0.json",
+            "shared-modules/python2.7/python-2.7.json",
     {
             "name": "qt4",
             "config-opts": [
@@ -101,6 +102,10 @@
         {
              "type": "patch",
              "path": "patches/qt4-disable-sslv3.patch"
+        },
+        {
+            "type": "patch",
+            "path": "patches/gcc9-qforeach.patch"
         },
         {
             "type": "shell",
@@ -816,8 +821,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-7.0.8-29.tar.xz",
-                            "sha256": "41590d506e2b4a7df7325934cb906db067d5cbb387c80fb05643186c8b6439e3"
+                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-7.0.8-64.tar.xz",
+                            "sha256": "5f67f093b7d10af4e0d8e203714c2e0fdd0366b9004aeec68ea1c1183b88f967"
                         }
                     ],
                     "cleanup": [
@@ -917,7 +922,6 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/Natron.git",
-                    "tag": "2.3.14",
                     "commit": "a0979febfa9c5e9d7aebf71439479ebf6ba04d69"
                 },
                 {
