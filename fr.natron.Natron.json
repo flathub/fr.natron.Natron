@@ -1,5 +1,5 @@
 {
-    "id": "fr.natron.Natron",
+    "app-id": "fr.natron.Natron",
     "runtime": "org.freedesktop.Sdk",
     "runtime-version": "19.08",
     "sdk": "org.freedesktop.Sdk",
