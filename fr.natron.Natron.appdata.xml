@@ -20,7 +20,7 @@
      <screenshots>
       <screenshot type="default">https://upload.wikimedia.org/wikipedia/commons/c/cc/Natron-screenshot-20180619.png</screenshot>
      </screenshots>
-     <url type="homepage">https//natrongithub.github.io</url>
+     <url type="homepage">https://natrongithub.github.io</url>
      <url type="bugtracker">https://github.com/NatronGitHub/Natron/issues</url>
      <content_rating type="oars-1.1" />
  </component> 

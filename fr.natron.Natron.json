@@ -925,6 +925,10 @@
                     "path": "config.pri"
                 },
                 {
+                    "type": "file",
+                    "path": "fr.natron.Natron.appdata.xml"
+                },
+                {
                     "type": "archive",
                     "url": "https://github.com/NatronGitHub/OpenColorIO-Configs/archive/Natron-v2.3.tar.gz",
                     "sha256": "0192bd27e467332c4e61c0103804198f941c88f43df7d9ba8ebb41b79adda640",
@@ -933,8 +937,7 @@
             ],
             "post-install": [
                 "mv /app/share/mime/packages/x-natron.xml /app/share/mime/packages/fr.natron.Natron.xml",
-                "mkdir -p /app/share/metainfo",
-                "install -m664 -p ../fr.natron.Natron.appdata.xml /app/share/metainfo",
+                "install -Dm644 -p ./fr.natron.Natron.appdata.xml /app/share/metainfo/fr.natron.Natron.appdata.xml",
                 "install -Dm644 ./Gui/Resources/Images/natronIcon256_linux.png /app/share/icons/hicolor/256x256/apps/natronIcon256_linux.png",
                 "install -Dm644 ./Gui/Resources/Images/natronIcon.svg /app/share/icons/hicolor/scalable/apps/fr.natron.Natron.svg",
                 "install -Dm644 ./Gui/Resources/Images/natronProjectIcon_linux.png /app/share/icons/hicolor/256x256/mimetypes/fr.natron.Natron-project.png",
