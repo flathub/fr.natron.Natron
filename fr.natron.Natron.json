@@ -1,7 +1,7 @@
 {
-    "id": "fr.natron.Natron",
+    "app-id": "fr.natron.Natron",
     "runtime": "org.freedesktop.Sdk",
-    "runtime-version": "18.08",
+    "runtime-version": "19.08",
     "sdk": "org.freedesktop.Sdk",
     "command": "Natron",
     "rename-icon": "natronIcon256_linux",
@@ -15,6 +15,7 @@
     "modules": [
             "shared-modules/glew/glew.json",
             "shared-modules/glu/glu-9.0.0.json",
+            "shared-modules/python2.7/python-2.7.json",
     {
             "name": "qt4",
             "config-opts": [
@@ -103,24 +104,12 @@
              "path": "patches/qt4-disable-sslv3.patch"
         },
         {
-            "type": "shell",
-            "commands": [
-                "sed -i \"s|-O2|${CXXFLAGS}|\" mkspecs/common/{g++,gcc}-base.conf",
-                "sed -i \"/^QMAKE_LFLAGS_RPATH/s| -Wl,-rpath,||g\" mkspecs/common/gcc-base-unix.conf",
-                "sed -i \"/^QMAKE_LFLAGS\s/s|+=|+= ${LDFLAGS}|g\" mkspecs/common/gcc-base.conf"
-            ]
+            "type": "patch",
+            "path": "patches/gcc9-qforeach.patch"
         },
         {
-            "type": "file",
+            "type": "patch",
             "path": "patches/qt4-openssl-1.1.patch"
-        },
-        {
-            "type": "shell",
-            "commands": [
-                "echo -e '#include<openssl/opensslv.h>\nint main(){return OPENSSL_VERSION_NUMBER>=0x010100000L?0:1;}' >has_openssl_1_1.c",
-                "gcc ${CFLAGS} has_openssl_1_1.c -o has_openssl_1_1",
-                "if ./has_openssl_1_1; then patch -p1 -i qt4-openssl-1.1.patch; fi"
-            ]
         }
     ],
     "cleanup": [
@@ -816,8 +805,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-7.0.8-29.tar.xz",
-                            "sha256": "41590d506e2b4a7df7325934cb906db067d5cbb387c80fb05643186c8b6439e3"
+                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-7.0.8-64.tar.xz",
+                            "sha256": "5f67f093b7d10af4e0d8e203714c2e0fdd0366b9004aeec68ea1c1183b88f967"
                         }
                     ],
                     "cleanup": [
@@ -917,7 +906,6 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/Natron.git",
-                    "tag": "2.3.14",
                     "commit": "a0979febfa9c5e9d7aebf71439479ebf6ba04d69"
                 },
                 {
@@ -937,6 +925,10 @@
                     "path": "config.pri"
                 },
                 {
+                    "type": "file",
+                    "path": "fr.natron.Natron.appdata.xml"
+                },
+                {
                     "type": "archive",
                     "url": "https://github.com/NatronGitHub/OpenColorIO-Configs/archive/Natron-v2.3.tar.gz",
                     "sha256": "0192bd27e467332c4e61c0103804198f941c88f43df7d9ba8ebb41b79adda640",
@@ -945,6 +937,7 @@
             ],
             "post-install": [
                 "mv /app/share/mime/packages/x-natron.xml /app/share/mime/packages/fr.natron.Natron.xml",
+                "install -Dm644 -p ./fr.natron.Natron.appdata.xml /app/share/metainfo/fr.natron.Natron.appdata.xml",
                 "install -Dm644 ./Gui/Resources/Images/natronIcon256_linux.png /app/share/icons/hicolor/256x256/apps/natronIcon256_linux.png",
                 "install -Dm644 ./Gui/Resources/Images/natronIcon.svg /app/share/icons/hicolor/scalable/apps/fr.natron.Natron.svg",
                 "install -Dm644 ./Gui/Resources/Images/natronProjectIcon_linux.png /app/share/icons/hicolor/256x256/mimetypes/fr.natron.Natron-project.png",
