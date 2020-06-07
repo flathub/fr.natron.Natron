@@ -286,35 +286,6 @@
             ]
         },
         {
-            "name": "ilmbase",
-            "config-opts": [
-                "--disable-static"
-            ],
-            "build-options": {
-                "env": {
-                    "LDFLAGS": "-lpthread"
-                }
-            },
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://download.savannah.nongnu.org/releases/openexr/ilmbase-2.2.1.tar.gz",
-                    "sha256": "cac206e63be68136ef556c2b555df659f45098c159ce24804e9d5e9e0286609e"
-                },
-                {
-                    "type": "shell",
-                    "commands": [
-                        "rm config.guess configure"
-                    ]
-                }
-            ],
-            "cleanup": [
-                "/include/OpenEXR",
-                "/lib/*.la",
-                "/lib/pkgconfig/IlmBase.pc"
-            ]
-        },
-        {
             "name": "openexr",
             "config-opts": [
                 "--disable-static"
@@ -322,8 +293,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.savannah.nongnu.org/releases/openexr/openexr-2.2.1.tar.gz",
-                    "sha256": "8f9a5af6131583404261931d9a5c83de0a425cb4b8b25ddab2b169fbf113aecd"
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/v2.5.1.tar.gz",
+                    "sha256": "11f806bf256453e39fc33bd1cf1fa576a54f144cedcdd3e6935a177e5a89d02e"
                 },
                 {
                     "type": "patch",
