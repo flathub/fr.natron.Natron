@@ -1132,7 +1132,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/Natron.git",
-                    "commit": "a0979febfa9c5e9d7aebf71439479ebf6ba04d69"
+                    "commit": "513a2491008c152417ae913f8d1ab83e432aa7e3"
                 },
                 {
                     "type": "patch",
@@ -1156,8 +1156,8 @@
                 },
                 {
                     "type": "archive",
-                    "url": "https://github.com/NatronGitHub/OpenColorIO-Configs/archive/Natron-v2.3.tar.gz",
-                    "sha256": "0192bd27e467332c4e61c0103804198f941c88f43df7d9ba8ebb41b79adda640",
+                    "url": "https://github.com/NatronGitHub/OpenColorIO-Configs/archive/Natron-v3.0.tar.gz",
+                    "sha256": "1d760f6a97fa0b44f69bdfe7d8e9949957fe4ccd1389b3059630094649ff249e",
                     "dest": "./OpenColorIO-Configs"
                 }
             ],
