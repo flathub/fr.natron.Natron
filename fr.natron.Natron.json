@@ -288,7 +288,8 @@
         {
             "name": "openexr",
             "config-opts": [
-                "--disable-static"
+                "--disable-static",
+                "--disable-debug"
             ],
             "sources": [
                 {
@@ -298,7 +299,7 @@
                 },
                 {
                     "type": "patch",
-                    "path": "patches/openexr-no-docs.patch"
+                    "path": "patches/patch-IlmImf-Makefile.diff"
                 },
                 {
                     "type": "shell",
