@@ -733,7 +733,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/openfx-io.git",
-                    "tag": "Natron-2.3.14"
+                    "tag": "Natron-2.3.15"
                 },
                 {
                     "type": "patch",
@@ -762,8 +762,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/devernay/openfx-misc.git",
-                    "tag": "Natron-2.3.14",
-                    "commit": "9ccae7325ace4ac367a5121f8d3bf1b99e249ec1"
+                    "tag": "Natron-2.3.15",
+                    "commit": "80c3f6f249f4aa59d07f88c546260a02c7a6af85"
                 },
                 {
                     "type": "patch",
@@ -775,15 +775,15 @@
                 },
                 {
                     "type": "archive",
-                    "url": "https://github.com/dtschump/CImg/archive/v.2.3.3.tar.gz",
-                    "sha256": "b9df022c2095683af98347d5093e8ec6d385dd50d0427ad22072dd6963725fc0",
-                    "dest": "./CImg-v.2.3.3"
+                    "url": "https://github.com/dtschump/CImg/archive/v.2.8.4.tar.gz",
+                    "sha256": "ff8b6a571686daa17a948ca03eb3494e647107417b8a7021a2dfd2c48557bef5",
+                    "dest": "./CImg-v.2.8.4"
                 },
                 {
                     "type": "shell",
                     "commands": [
-                        "cp ./CImg-v.2.3.3/CImg.h ./CImg",
-                        "cp ./CImg-v.2.3.3/plugins/inpaint.h ./CImg/Inpaint",
+                        "cp ./CImg-v.2.8.4/CImg.h ./CImg",
+                        "cp ./CImg-v.2.8.4/plugins/inpaint.h ./CImg/Inpaint",
                         "patch -p0 -dCImg < CImg/Inpaint/inpaint.h.patch"
                     ]
                 }
