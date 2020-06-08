@@ -1055,19 +1055,19 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/openfx-gmic.git",
-                    "tag": "Natron-2.3.14",
-                    "commit": "096fe05434e077077f804f5a3f2e7d5715f7519c"
+                    "tag": "Natron-2.3.15",
+                    "commit": "8805f494b1dbb106b51e128cbf7ee295462591ac"
                 },
                 {
                     "type": "file",
-                    "url": "http://gmic.eu/files/source/gmic_2.3.3.tar.gz",
-                    "sha256": "46417d48d9dd87a155ba979667834a7d6899652f097cc25652e0680ee0b13c6a",
+                    "url": "http://gmic.eu/files/source/gmic_2.8.4.tar.gz",
+                    "sha256": "b2a279bdf981595b30d8d7828fabf9a620cde06eae8db345a8cddf2160c25379",
                     "dest": "./"
                 },
                 {
                     "type": "git",
                     "url": "https://github.com/dtschump/gmic-community.git",
-                    "commit": "ccfb3190aa414c4c09db643e1ea6ff446dbbd67f",
+                    "commit": "bb592b20e2e25f8786dbfb8ac05fd1c5f2e811d6",
                     "dest": "./gmic-community"
                 },
                 {
