@@ -286,20 +286,57 @@
             ]
         },
         {
-            "name": "openexr",
+            "name": "ilmbase",
             "config-opts": [
-                "--disable-static",
-                "--disable-debug"
+                "--enable-shared",
+                "--disable-static"
             ],
+            "build-options": {
+                "cxxflags": "-std=c++14",
+                "env": {
+                    "LDFLAGS": "-lpthread"
+                }
+            },
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/v2.5.1.tar.gz",
-                    "sha256": "11f806bf256453e39fc33bd1cf1fa576a54f144cedcdd3e6935a177e5a89d02e"
+                    "url": "https://github.com/openexr/openexr/releases/download/v2.3.0/ilmbase-2.3.0.tar.gz",
+                    "sha256": "456978d1a978a5f823c7c675f3f36b0ae14dba36638aeaa3c4b0e784f12a3862"
+                },
+                {
+                    "type": "shell",
+                    "commands": [
+                        "rm config.guess configure"
+                    ]
+                }
+            ],
+            "cleanup": [
+                "/include/OpenEXR",
+                "/lib/libHalf.la",
+                "/lib/libIex*.la",
+                "/lib/libIlm*.la",
+                "/lib/libImath*.la",
+                "/lib/pkgconfig/IlmBase.pc"
+            ]
+        },
+        {
+            "name": "openexr",
+            "config-opts": [
+                "--enable-shared",
+                "--disable-static"
+            ],
+            "build-options": {
+                "cxxflags": "-std=c++14"
+            },
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/openexr/openexr/releases/download/v2.3.0/openexr-2.3.0.tar.gz",
+                    "sha256": "fd6cb3a87f8c1a233be17b94c74799e6241d50fc5efd4df75c7a4b9cf4e25ea6"
                 },
                 {
                     "type": "patch",
-                    "path": "patches/patch-IlmImf-Makefile.diff"
+                    "path": "patches/openexr-no-docs.patch"
                 },
                 {
                     "type": "shell",
@@ -314,24 +351,6 @@
                 "/lib/*.la",
                 "/lib/pkgconfig",
                 "/share/aclocal"
-            ]
-        },
-        {
-            "name": "openjpeg",
-            "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DCMAKE_BUILD_TYPE=Release"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/uclouvain/openjpeg/archive/v2.3.1.tar.gz",
-                    "sha256": "63f5a4713ecafc86de51bfad89cc07bb788e9bba24ebbf0c4ca637621aadb6a9"
-                }
-            ],
-            "cleanup": [
-                "/bin",
-                "/include"
             ]
         },
         {
