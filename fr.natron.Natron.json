@@ -816,24 +816,7 @@
                 },
                 {
                     "type": "patch",
-                    "path": "patches/openfx-arena_disable-curl.patch"
-                },
-                {
-                    "type": "patch",
                     "path": "patches/openfx-arena-plugins-path.patch"
-                },
-                {
-                    "type": "git",
-                    "url": "https://github.com/lvandeve/lodepng.git",
-                    "commit": "bd8f274fb51ef18b6d26b5f106ae4bef2150622e",
-                    "dest": "./lodepng"
-                },
-                {
-                    "type": "shell",
-                    "commands": [
-                        "cp ./lodepng/lodepng.h ./Bundle",
-                        "cp ./lodepng/lodepng.cpp ./Bundle"
-                    ]
                 }
             ],
             "build-commands": [
