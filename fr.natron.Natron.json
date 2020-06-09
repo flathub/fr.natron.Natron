@@ -16,6 +16,7 @@
             "shared-modules/glew/glew.json",
             "shared-modules/glu/glu-9.json",
             "shared-modules/python2.7/python-2.7.json",
+            "shared-modules/openjpeg",
     {
             "name": "qt4",
             "config-opts": [
