@@ -16,7 +16,6 @@
             "shared-modules/glew/glew.json",
             "shared-modules/glu/glu-9.json",
             "shared-modules/python2.7/python-2.7.json",
-            "shared-modules/openjpeg/openjpeg.json",
     {
             "name": "qt4",
             "config-opts": [
@@ -383,34 +382,99 @@
             ]
         },
         {
+            "name" : "libheif",
+            "config-opts": [ "--disable-gdk-pixbuf" ],
+            "cleanup": [ "/bin" ],
+            "modules": [
+                {
+                    "name": "libde265",
+                    "config-opts": [ "--disable-sherlock265" ],
+                    "cleanup": [ "/bin" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.5/libde265-1.0.5.tar.gz",
+                            "sha256": "e3f277d8903408615a5cc34718b391b83c97c646faea4f41da93bac5ee08a87f"
+                        }
+                    ]
+                }
+            ],
+            "sources" : [
+                {
+                    "url" : "https://github.com/strukturag/libheif/releases/download/v1.6.2/libheif-1.6.2.tar.gz",
+                    "sha256" : "bb229e855621deb374f61bee95c4642f60c2a2496bded35df3d3c42cc6d8eefc",
+                    "type" : "archive"
+                }
+            ]
+        },
+        {
+            "name": "fmt",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release"
+            ],
+            "cleanup": [
+                "/include",
+                "*.a"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/fmtlib/fmt/archive/5.2.1.tar.gz",
+                    "sha256": "3c812a18e9f72a88631ab4732a97ce9ef5bcbefb3235e9fd465f059ba204359b"
+                }
+            ]
+        },
+        {
+            "name": "robin-map",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/Tessil/robin-map/archive/v0.6.2.tar.gz",
+                    "sha256": "c08ec4b1bf1c85eb0d6432244a6a89862229da1cb834f3f90fba8dc35d8c8ef1"
+                }
+            ],
+            "cleanup": [
+                "/include"
+            ]
+        },
+        {
             "name": "openimageio",
             "buildsystem": "cmake-ninja",
+            "builddir": true,
             "config-opts": [
-                "-DOIIO_BUILD_TOOLS:BOOL=ON",
-                "-DOIIO_BUILD_TESTS:BOOL=OFF",
-                "-DBUILDSTATIC:BOOL=OFF",
-                "-DINSTALL_DOCS:BOOL=OFF",
+                "-DCMAKE_BUILD_TYPE=Release",
                 "-DUSE_OPENCV:BOOL=FALSE",
                 "-DUSE_OPENSSL:BOOL=FALSE",
-                "-DUSE_QT:BOOL=FALSE",
+                "-DUSE_QT5:BOOL=FALSE",
+                "-DUSE_OPENGL:BOOL=FALSE",
+                "-DUSE_HEIF:BOOL=TRUE",
+                "-DUSE_OPENJPEG:BOOL=TRUE",
                 "-DUSE_PYTHON:BOOL=FALSE",
                 "-DUSE_FIELD3D:BOOL=FALSE",
+                "-DOIIO_BUILD_TESTS=0",
+                "-DOIIO_BUILD_TOOLS=1",
                 "-DSTOP_ON_WARNING:BOOL=FALSE",
                 "-DUSE_GIF:BOOL=TRUE",
                 "-DUSE_FREETYPE:BOOL=TRUE",
                 "-DUSE_FFMPEG:BOOL=FALSE",
                 "-DLINKSTATIC=0",
-                "-DUSE_OPENJPEG:BOOL=TRUE",
+                "-DOpenJpeg_ROOT=/app/",
                 "-DUSE_LIBRAW:BOOL=TRUE",
                 "-DLIBRAW_PATH=/app/lib/libraw",
                 "-DCMAKE_LIBRARY_PATH=/app/lib"
             ],
-            "builddir": true,
+            "modules": [
+                "shared-modules/openjpeg/openjpeg.json"
+            ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/OpenImageIO/oiio/archive/Release-1.8.13.tar.gz",
-                    "sha256": "24b93ebe6cc31aa92d3246b65ec66fcf626af32fcd4b04847c7f23c8e2adcabd"
+                    "url": "https://github.com/OpenImageIO/oiio/archive/Release-2.1.16.0.tar.gz",
+                    "sha256": "f44e3b3cffe9a8f47395da1ae59e972ecb26adf65f17581e6a489fdcce0cb116"
                 }
             ],
             "cleanup": [
