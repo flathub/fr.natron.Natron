@@ -491,8 +491,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "http://ftp.videolan.org/pub/x264/snapshots/x264-snapshot-20190730-2245-stable.tar.bz2",
-                    "sha256": "954371ae1ce18bee2227a88f860afead2da1bc18522c646b5dc18e74d6452288"
+                    "url": "http://ftp.videolan.org/pub/x264/snapshots/x264-snapshot-20191217-2245.tar.bz2",
+                    "sha256": "0bb67d095513391e637b3b47e8efc3ba4603c3844f1b4c2690f4d36da7763055"
                 }
             ],
             "cleanup": [
