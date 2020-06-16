@@ -875,7 +875,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/openfx-arena.git",
-                    "tag": "Natron-2.3.15"
+                    "commit": "26b0b637e1087c23684935f67306e7f8a74a6090"
                 },
                 {
                     "type": "patch",
