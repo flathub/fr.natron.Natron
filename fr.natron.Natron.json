@@ -857,9 +857,45 @@
             ],
             "sources": [
                 {
+                    "type": "archive",
+                    "url": "https://github.com/NatronGitHub/openfx-arena/archive/Natron-2.3.15.tar.gz",
+                    "sha256": "ad4e6e2855d838e7f192fdda587e51c420077ba2834895c37cc0326451aca64f"
+                },
+                {
+                    "type": "archive",
+                    "url": "https://github.com/NatronGitHub/openfx/archive/Natron-2.3.15.tar.gz",
+                    "sha256": "73b770667ae94362ab021e579adc7d2743b01a78a6c4db0010583691a666e87e",
+                    "dest": "./OpenFX"
+                },
+                {
+                    "type": "archive",
+                    "url": "https://github.com/NatronGitHub/openfx-io/archive/Natron-2.3.15.tar.gz",
+                    "sha256": "096e9af369dfe87fc5a299186b073eb40dc2ecdf971d063ed4a1b444eb4e4693",
+                    "dest": "./OpenFX-IO"
+                },
+                {
+                    "type": "archive",
+                    "url": "https://github.com/NatronGitHub/SequenceParsing/archive/Natron-2.3.15.tar.gz",
+                    "sha256": "9f32af9708578426c1d638bfa9eda6ba4815a36e51a1bf7050c03a4c2d1a6f33",
+                    "dest": "./OpenFX-IO/IOSupport/SequenceParsing/"
+                },
+                {
+                    "type": "archive",
+                    "url": "https://github.com/NatronGitHub/tinydir/archive/1.2.3.tar.gz",
+                    "sha256": "e8ba8037d99a23c95b784c2ccbf52e2adb94d6a94f40e2dde19ac75c7d60efa2",
+                    "dest": "./OpenFX-IO/IOSupport/SequenceParsing/tinydir/"
+                },
+                {
+                    "type": "archive",
+                    "url": "https://github.com/NatronGitHub/openfx-supportext/archive/Natron-2.3.15.tar.gz",
+                    "sha256": "61824d957bd7fe1e9be69e0225ba70cfeebf67ecf78e109f49139b64cc45df22",
+                    "dest": "./SupportExt"
+                },
+                {
                     "type": "git",
-                    "url": "https://github.com/NatronGitHub/openfx-arena.git",
-                    "commit": "26b0b637e1087c23684935f67306e7f8a74a6090"
+                    "url": "https://github.com/lvandeve/lodepng.git",
+                    "commit": "34628e89e80cd007179b25b0b2695e6af0f57fac",
+                    "dest": "./lodepng"
                 },
                 {
                     "type": "patch",
