@@ -718,27 +718,6 @@
             ]
         },
         {
-            "name": "gpac",
-            "config-opts": [
-                "--disable-shared",
-                "--enable-static",
-                "--disable-doc",
-                "--extra-cflags=-fPIC"
-            ],
-            "make-install-args": [
-                "install-lib"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/gpac/gpac.git"
-                }
-            ],
-            "cleanup": [
-                "*"
-            ]
-        },
-        {
             "name": "sip",
             "buildsystem": "simple",
             "sources": [
