@@ -801,7 +801,12 @@
         },
         {
             "name": "openfx-misc",
-            "buildsystem": "simple",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DCMAKE_INSTALL_PREFIX=/app/Plugins/OFX/Natron"
+            ],
             "sources": [
                 {
                     "type": "git",
@@ -831,10 +836,6 @@
                         "patch -p0 -dCImg < CImg/Inpaint/inpaint.h.patch"
                     ]
                 }
-            ],
-            "build-commands": [
-                "make CONFIG=release PREFIX=/app",
-                "make install CONFIG=release DESTDIR=/app"
             ],
             "cleanup": [
                 "openfx/Documentation",
