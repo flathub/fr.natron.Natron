@@ -849,7 +849,12 @@
         },
         {
             "name": "openfx-arena",
-            "buildsystem": "simple",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_INSTALL_PREFIX=/app/Plugins/OFX/Natron",
+                "-DAUDIO=ON"
+            ],
             "sources": [
                 {
                     "type": "git",
@@ -861,10 +866,6 @@
                     "path": "patches/openfx-arena-plugins-path.patch"
                 }
             ],
-            "build-commands": [
-                "make CONFIG=release PREFIX=/app",
-                "make install CONFIG=release DESTDIR=/app"
-            ],
             "modules": [
                 {
                     "name": "cppunit",
@@ -873,6 +874,22 @@
                             "type": "archive",
                             "url": "https://dev-www.libreoffice.org/src/cppunit/cppunit-1.13.2.tar.gz",
                             "sha256": "3f47d246e3346f2ba4d7c9e882db3ad9ebd3fcbd2e8b732f946e0e3eeb9f429f"
+                        }
+                    ]
+                },
+                {
+                    "name": "sox",
+                    "config-opts": [
+                        "--disable-static"
+                    ],
+                    "cleanup": [
+                        "/bin"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://downloads.sourceforge.net/project/sox/sox/14.4.2/sox-14.4.2.tar.bz2",
+                            "sha256": "81a6956d4330e75b5827316e44ae381e6f1e8928003c6aa45896da9041ea149c"
                         }
                     ]
                 },
