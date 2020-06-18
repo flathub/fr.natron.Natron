@@ -137,8 +137,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://sourceforge.net/projects/boost/files/boost/1.67.0/boost_1_67_0.tar.bz2",
-                    "sha256": "2684c972994ee57fc5632e03bf044746f6eb45d4920c343937a465fd67a5adba"
+                    "url": "https://sourceforge.net/projects/boost/files/boost/1.73.0/boost_1_73_0.tar.bz2",
+                    "sha256": "4eb3b8d442b426dc35346235c8733b5ae35ba431690e38c6a8263dce9fcbb402"
                 }
             ],
             "cleanup": [
@@ -221,8 +221,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/imageworks/OpenColorIO/archive/v1.1.0.tar.gz",
-                    "sha256": "228589879e1f11e455a555304007748a8904057088319ebbf172d9384b93c079"
+                    "url": "https://github.com/imageworks/OpenColorIO/archive/v1.1.1.tar.gz",
+                    "sha256": "c9b5b9def907e1dafb29e37336b702fff22cc6306d445a13b1621b8a754c14c8"
                 },
                 {
                     "type": "shell",
@@ -288,9 +288,11 @@
         {
             "name": "ilmbase",
             "config-opts": [
+                "--enable-shared",
                 "--disable-static"
             ],
             "build-options": {
+                "cxxflags": "-std=c++14",
                 "env": {
                     "LDFLAGS": "-lpthread"
                 }
@@ -298,8 +300,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.savannah.nongnu.org/releases/openexr/ilmbase-2.2.1.tar.gz",
-                    "sha256": "cac206e63be68136ef556c2b555df659f45098c159ce24804e9d5e9e0286609e"
+                    "url": "https://github.com/openexr/openexr/releases/download/v2.3.0/ilmbase-2.3.0.tar.gz",
+                    "sha256": "456978d1a978a5f823c7c675f3f36b0ae14dba36638aeaa3c4b0e784f12a3862"
                 },
                 {
                     "type": "shell",
@@ -310,20 +312,27 @@
             ],
             "cleanup": [
                 "/include/OpenEXR",
-                "/lib/*.la",
+                "/lib/libHalf.la",
+                "/lib/libIex*.la",
+                "/lib/libIlm*.la",
+                "/lib/libImath*.la",
                 "/lib/pkgconfig/IlmBase.pc"
             ]
         },
         {
             "name": "openexr",
             "config-opts": [
+                "--enable-shared",
                 "--disable-static"
             ],
+            "build-options": {
+                "cxxflags": "-std=c++14"
+            },
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.savannah.nongnu.org/releases/openexr/openexr-2.2.1.tar.gz",
-                    "sha256": "8f9a5af6131583404261931d9a5c83de0a425cb4b8b25ddab2b169fbf113aecd"
+                    "url": "https://github.com/openexr/openexr/releases/download/v2.3.0/openexr-2.3.0.tar.gz",
+                    "sha256": "fd6cb3a87f8c1a233be17b94c74799e6241d50fc5efd4df75c7a4b9cf4e25ea6"
                 },
                 {
                     "type": "patch",
@@ -344,7 +353,6 @@
                 "/share/aclocal"
             ]
         },
-        "shared-modules/openjpeg/openjpeg.json",
         {
             "name": "libraw",
             "config-opts": [
@@ -374,34 +382,99 @@
             ]
         },
         {
+            "name" : "libheif",
+            "config-opts": [ "--disable-gdk-pixbuf" ],
+            "cleanup": [ "/bin" ],
+            "modules": [
+                {
+                    "name": "libde265",
+                    "config-opts": [ "--disable-sherlock265" ],
+                    "cleanup": [ "/bin" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.5/libde265-1.0.5.tar.gz",
+                            "sha256": "e3f277d8903408615a5cc34718b391b83c97c646faea4f41da93bac5ee08a87f"
+                        }
+                    ]
+                }
+            ],
+            "sources" : [
+                {
+                    "url" : "https://github.com/strukturag/libheif/releases/download/v1.6.2/libheif-1.6.2.tar.gz",
+                    "sha256" : "bb229e855621deb374f61bee95c4642f60c2a2496bded35df3d3c42cc6d8eefc",
+                    "type" : "archive"
+                }
+            ]
+        },
+        {
+            "name": "fmt",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release"
+            ],
+            "cleanup": [
+                "/include",
+                "*.a"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/fmtlib/fmt/archive/5.2.1.tar.gz",
+                    "sha256": "3c812a18e9f72a88631ab4732a97ce9ef5bcbefb3235e9fd465f059ba204359b"
+                }
+            ]
+        },
+        {
+            "name": "robin-map",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/Tessil/robin-map/archive/v0.6.2.tar.gz",
+                    "sha256": "c08ec4b1bf1c85eb0d6432244a6a89862229da1cb834f3f90fba8dc35d8c8ef1"
+                }
+            ],
+            "cleanup": [
+                "/include"
+            ]
+        },
+        {
             "name": "openimageio",
             "buildsystem": "cmake-ninja",
+            "builddir": true,
             "config-opts": [
-                "-DOIIO_BUILD_TOOLS:BOOL=ON",
-                "-DOIIO_BUILD_TESTS:BOOL=OFF",
-                "-DBUILDSTATIC:BOOL=OFF",
-                "-DINSTALL_DOCS:BOOL=OFF",
+                "-DCMAKE_BUILD_TYPE=Release",
                 "-DUSE_OPENCV:BOOL=FALSE",
                 "-DUSE_OPENSSL:BOOL=FALSE",
-                "-DUSE_QT:BOOL=FALSE",
+                "-DUSE_QT5:BOOL=FALSE",
+                "-DUSE_OPENGL:BOOL=FALSE",
+                "-DUSE_HEIF:BOOL=TRUE",
+                "-DUSE_OPENJPEG:BOOL=TRUE",
                 "-DUSE_PYTHON:BOOL=FALSE",
                 "-DUSE_FIELD3D:BOOL=FALSE",
+                "-DOIIO_BUILD_TESTS=0",
+                "-DOIIO_BUILD_TOOLS=1",
                 "-DSTOP_ON_WARNING:BOOL=FALSE",
                 "-DUSE_GIF:BOOL=TRUE",
                 "-DUSE_FREETYPE:BOOL=TRUE",
                 "-DUSE_FFMPEG:BOOL=FALSE",
                 "-DLINKSTATIC=0",
-                "-DUSE_OPENJPEG:BOOL=TRUE",
+                "-DOpenJpeg_ROOT=/app/",
                 "-DUSE_LIBRAW:BOOL=TRUE",
                 "-DLIBRAW_PATH=/app/lib/libraw",
                 "-DCMAKE_LIBRARY_PATH=/app/lib"
             ],
-            "builddir": true,
+            "modules": [
+                "shared-modules/openjpeg/openjpeg.json"
+            ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/OpenImageIO/oiio/archive/Release-1.8.13.tar.gz",
-                    "sha256": "24b93ebe6cc31aa92d3246b65ec66fcf626af32fcd4b04847c7f23c8e2adcabd"
+                    "url": "https://github.com/OpenImageIO/oiio/archive/Release-2.1.16.0.tar.gz",
+                    "sha256": "f44e3b3cffe9a8f47395da1ae59e972ecb26adf65f17581e6a489fdcce0cb116"
                 }
             ],
             "cleanup": [
@@ -418,8 +491,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "http://ftp.videolan.org/pub/x264/snapshots/x264-snapshot-20190730-2245-stable.tar.bz2",
-                    "sha256": "954371ae1ce18bee2227a88f860afead2da1bc18522c646b5dc18e74d6452288"
+                    "url": "http://ftp.videolan.org/pub/x264/snapshots/x264-snapshot-20191217-2245.tar.bz2",
+                    "sha256": "0bb67d095513391e637b3b47e8efc3ba4603c3844f1b4c2690f4d36da7763055"
                 }
             ],
             "cleanup": [
@@ -634,35 +707,14 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://www.ffmpeg.org/releases/ffmpeg-4.2.1.tar.xz",
-                    "sha256": "cec7c87e9b60d174509e263ac4011b522385fd0775292e1670ecc1180c9bb6d4"
+                    "url": "https://www.ffmpeg.org/releases/ffmpeg-4.2.3.tar.xz",
+                    "sha256": "9df6c90aed1337634c1fb026fb01c154c29c82a64ea71291ff2da9aacb9aad31"
                 }
             ],
             "cleanup": [
                 "/include",
                 "/lib/pkgconfig",
                 "/share/ffmpeg"
-            ]
-        },
-        {
-            "name": "gpac",
-            "config-opts": [
-                "--disable-shared",
-                "--enable-static",
-                "--disable-doc",
-                "--extra-cflags=-fPIC"
-            ],
-            "make-install-args": [
-                "install-lib"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/gpac/gpac.git"
-                }
-            ],
-            "cleanup": [
-                "*"
             ]
         },
         {
@@ -725,7 +777,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/openfx-io.git",
-                    "tag": "Natron-2.3.14"
+                    "tag": "Natron-2.3.15"
                 },
                 {
                     "type": "patch",
@@ -749,13 +801,18 @@
         },
         {
             "name": "openfx-misc",
-            "buildsystem": "simple",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DCMAKE_INSTALL_PREFIX=/app/Plugins/OFX/Natron"
+            ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://github.com/devernay/openfx-misc.git",
-                    "tag": "Natron-2.3.14",
-                    "commit": "9ccae7325ace4ac367a5121f8d3bf1b99e249ec1"
+                    "tag": "Natron-2.3.15",
+                    "commit": "80c3f6f249f4aa59d07f88c546260a02c7a6af85"
                 },
                 {
                     "type": "patch",
@@ -767,22 +824,18 @@
                 },
                 {
                     "type": "archive",
-                    "url": "https://github.com/dtschump/CImg/archive/v.2.3.3.tar.gz",
-                    "sha256": "b9df022c2095683af98347d5093e8ec6d385dd50d0427ad22072dd6963725fc0",
-                    "dest": "./CImg-v.2.3.3"
+                    "url": "https://github.com/dtschump/CImg/archive/v.2.8.4.tar.gz",
+                    "sha256": "ff8b6a571686daa17a948ca03eb3494e647107417b8a7021a2dfd2c48557bef5",
+                    "dest": "./CImg-v.2.8.4"
                 },
                 {
                     "type": "shell",
                     "commands": [
-                        "cp ./CImg-v.2.3.3/CImg.h ./CImg",
-                        "cp ./CImg-v.2.3.3/plugins/inpaint.h ./CImg/Inpaint",
+                        "cp ./CImg-v.2.8.4/CImg.h ./CImg",
+                        "cp ./CImg-v.2.8.4/plugins/inpaint.h ./CImg/Inpaint",
                         "patch -p0 -dCImg < CImg/Inpaint/inpaint.h.patch"
                     ]
                 }
-            ],
-            "build-commands": [
-                "make CONFIG=release PREFIX=/app",
-                "make install CONFIG=release DESTDIR=/app"
             ],
             "cleanup": [
                 "openfx/Documentation",
@@ -797,39 +850,58 @@
         },
         {
             "name": "openfx-arena",
-            "buildsystem": "simple",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_INSTALL_PREFIX=/app/Plugins/OFX/Natron",
+                "-DAUDIO=ON"
+            ],
             "sources": [
                 {
-                    "type": "git",
-                    "url": "https://github.com/NatronGitHub/openfx-arena.git",
-                    "tag": "Natron-2.3.14",
-                    "commit": "2959d4f801a1d8d152f1e0b75331493c2547f805"
+                    "type": "archive",
+                    "url": "https://github.com/NatronGitHub/openfx-arena/archive/Natron-2.3.15.tar.gz",
+                    "sha256": "ad4e6e2855d838e7f192fdda587e51c420077ba2834895c37cc0326451aca64f"
                 },
                 {
-                    "type": "patch",
-                    "path": "patches/openfx-arena_disable-curl.patch"
+                    "type": "archive",
+                    "url": "https://github.com/NatronGitHub/openfx/archive/Natron-2.3.15.tar.gz",
+                    "sha256": "73b770667ae94362ab021e579adc7d2743b01a78a6c4db0010583691a666e87e",
+                    "dest": "./OpenFX"
                 },
                 {
-                    "type": "patch",
-                    "path": "patches/openfx-arena-plugins-path.patch"
+                    "type": "archive",
+                    "url": "https://github.com/NatronGitHub/openfx-io/archive/Natron-2.3.15.tar.gz",
+                    "sha256": "096e9af369dfe87fc5a299186b073eb40dc2ecdf971d063ed4a1b444eb4e4693",
+                    "dest": "./OpenFX-IO"
+                },
+                {
+                    "type": "archive",
+                    "url": "https://github.com/NatronGitHub/SequenceParsing/archive/Natron-2.3.15.tar.gz",
+                    "sha256": "9f32af9708578426c1d638bfa9eda6ba4815a36e51a1bf7050c03a4c2d1a6f33",
+                    "dest": "./OpenFX-IO/IOSupport/SequenceParsing/"
+                },
+                {
+                    "type": "archive",
+                    "url": "https://github.com/NatronGitHub/tinydir/archive/1.2.3.tar.gz",
+                    "sha256": "e8ba8037d99a23c95b784c2ccbf52e2adb94d6a94f40e2dde19ac75c7d60efa2",
+                    "dest": "./OpenFX-IO/IOSupport/SequenceParsing/tinydir/"
+                },
+                {
+                    "type": "archive",
+                    "url": "https://github.com/NatronGitHub/openfx-supportext/archive/Natron-2.3.15.tar.gz",
+                    "sha256": "61824d957bd7fe1e9be69e0225ba70cfeebf67ecf78e109f49139b64cc45df22",
+                    "dest": "./SupportExt"
                 },
                 {
                     "type": "git",
                     "url": "https://github.com/lvandeve/lodepng.git",
-                    "commit": "bd8f274fb51ef18b6d26b5f106ae4bef2150622e",
+                    "commit": "34628e89e80cd007179b25b0b2695e6af0f57fac",
                     "dest": "./lodepng"
                 },
                 {
-                    "type": "shell",
-                    "commands": [
-                        "cp ./lodepng/lodepng.h ./Bundle",
-                        "cp ./lodepng/lodepng.cpp ./Bundle"
-                    ]
+                    "type": "patch",
+                    "path": "patches/openfx-arena-plugins-path.patch"
                 }
-            ],
-            "build-commands": [
-                "make CONFIG=release PREFIX=/app",
-                "make install CONFIG=release DESTDIR=/app"
             ],
             "modules": [
                 {
@@ -839,6 +911,22 @@
                             "type": "archive",
                             "url": "https://dev-www.libreoffice.org/src/cppunit/cppunit-1.13.2.tar.gz",
                             "sha256": "3f47d246e3346f2ba4d7c9e882db3ad9ebd3fcbd2e8b732f946e0e3eeb9f429f"
+                        }
+                    ]
+                },
+                {
+                    "name": "sox",
+                    "config-opts": [
+                        "--disable-static"
+                    ],
+                    "cleanup": [
+                        "/bin"
+                    ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://downloads.sourceforge.net/project/sox/sox/14.4.2/sox-14.4.2.tar.bz2",
+                            "sha256": "81a6956d4330e75b5827316e44ae381e6f1e8928003c6aa45896da9041ea149c"
                         }
                     ]
                 },
@@ -1023,8 +1111,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-7.0.9-5.tar.xz",
-                            "sha256": "f6c1962c67e046e8899b6f7ca5b49c0de5795eee80c5f35b274d80e99b83aec8"
+                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-7.0.10-17.tar.xz",
+                            "sha256": "82a304c0527d372d8a8929706165702eebfaadc88762f29ce19168b5bd6bbe1e"
                         }
                     ],
                     "cleanup": [
@@ -1047,19 +1135,19 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/openfx-gmic.git",
-                    "tag": "Natron-2.3.14",
-                    "commit": "096fe05434e077077f804f5a3f2e7d5715f7519c"
+                    "tag": "Natron-2.3.15",
+                    "commit": "8805f494b1dbb106b51e128cbf7ee295462591ac"
                 },
                 {
                     "type": "file",
-                    "url": "http://gmic.eu/files/source/gmic_2.3.3.tar.gz",
-                    "sha256": "46417d48d9dd87a155ba979667834a7d6899652f097cc25652e0680ee0b13c6a",
+                    "url": "http://gmic.eu/files/source/gmic_2.8.4.tar.gz",
+                    "sha256": "b2a279bdf981595b30d8d7828fabf9a620cde06eae8db345a8cddf2160c25379",
                     "dest": "./"
                 },
                 {
                     "type": "git",
                     "url": "https://github.com/dtschump/gmic-community.git",
-                    "commit": "ccfb3190aa414c4c09db643e1ea6ff446dbbd67f",
+                    "commit": "bb592b20e2e25f8786dbfb8ac05fd1c5f2e811d6",
                     "dest": "./gmic-community"
                 },
                 {
@@ -1124,7 +1212,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/Natron.git",
-                    "commit": "a0979febfa9c5e9d7aebf71439479ebf6ba04d69"
+                    "commit": "513a2491008c152417ae913f8d1ab83e432aa7e3"
                 },
                 {
                     "type": "patch",
@@ -1148,8 +1236,8 @@
                 },
                 {
                     "type": "archive",
-                    "url": "https://github.com/NatronGitHub/OpenColorIO-Configs/archive/Natron-v2.3.tar.gz",
-                    "sha256": "0192bd27e467332c4e61c0103804198f941c88f43df7d9ba8ebb41b79adda640",
+                    "url": "https://github.com/NatronGitHub/OpenColorIO-Configs/archive/Natron-v3.0.tar.gz",
+                    "sha256": "1d760f6a97fa0b44f69bdfe7d8e9949957fe4ccd1389b3059630094649ff249e",
                     "dest": "./OpenColorIO-Configs"
                 }
             ],
