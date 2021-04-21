@@ -1,7 +1,7 @@
 {
     "app-id": "fr.natron.Natron",
     "runtime": "org.freedesktop.Sdk",
-    "runtime-version": "19.08",
+    "runtime-version": "20.08",
     "sdk": "org.freedesktop.Sdk",
     "command": "Natron",
     "rename-icon": "natronIcon256_linux",
@@ -546,8 +546,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://bitbucket.org/multicoreware/x265/downloads/x265_3.2.1.tar.gz",
-                    "sha256": "fb9badcf92364fd3567f8b5aa0e5e952aeea7a39a2b864387cec31e3b58cbbcc"
+                    "url": "https://github.com/videolan/x265/archive/refs/tags/3.4.tar.gz",
+                    "sha256": "544d147bf146f8994a7bf8521ed878c93067ea1c7c6e93ab602389be3117eaaf"
                 }
             ],
             "cleanup": [
@@ -777,7 +777,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/openfx-io.git",
-                    "tag": "Natron-2.3.15"
+                    "tag": "Natron-2.4.0"
                 },
                 {
                     "type": "patch",
@@ -811,8 +811,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/devernay/openfx-misc.git",
-                    "tag": "Natron-2.3.15",
-                    "commit": "80c3f6f249f4aa59d07f88c546260a02c7a6af85"
+                    "tag": "Natron-2.4.0",
+                    "commit": "f4c99c31d0d0a802b7a7cf43c54c19f74fedb9cc"
                 },
                 {
                     "type": "patch",
@@ -859,19 +859,19 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/NatronGitHub/openfx-arena/archive/Natron-2.3.15.tar.gz",
-                    "sha256": "ad4e6e2855d838e7f192fdda587e51c420077ba2834895c37cc0326451aca64f"
+                    "url": "https://github.com/NatronGitHub/openfx-arena/archive/Natron-2.4.0.tar.gz",
+                    "sha256": "bde6839bcb41411153f231cda4ec9bbbd75bcd0719d9bab06e8bbf400d52b02b"
                 },
                 {
                     "type": "archive",
-                    "url": "https://github.com/NatronGitHub/openfx/archive/Natron-2.3.15.tar.gz",
-                    "sha256": "73b770667ae94362ab021e579adc7d2743b01a78a6c4db0010583691a666e87e",
+                    "url": "https://github.com/NatronGitHub/openfx/archive/Natron-2.4.0.tar.gz",
+                    "sha256": "0e7e134b76cfcdc539815609fd3f868529cab08739a69acb687f85a1a98aa66e",
                     "dest": "./OpenFX"
                 },
                 {
                     "type": "archive",
-                    "url": "https://github.com/NatronGitHub/openfx-io/archive/Natron-2.3.15.tar.gz",
-                    "sha256": "096e9af369dfe87fc5a299186b073eb40dc2ecdf971d063ed4a1b444eb4e4693",
+                    "url": "https://github.com/NatronGitHub/openfx-io/archive/Natron-2.4.0.tar.gz",
+                    "sha256": "eb95d489c95674e3ba612bd5e0b3d4b57ec102ca9586c8ff0ddd4267f8f512a8",
                     "dest": "./OpenFX-IO"
                 },
                 {
@@ -1012,69 +1012,6 @@
                     ]
                 },
                 {
-                    "name": "cairo",
-                    "config-opts": [
-                        "--with-libpng=yes",
-                        "--enable-static",
-                        "--enable-tee"
-                    ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://www.cairographics.org/releases/cairo-1.14.12.tar.xz",
-                            "sha256": "8c90f00c500b2299c0a323dd9beead2a00353752b2092ead558139bd67f7bf16"
-                        }
-                    ],
-                    "cleanup": [
-                        "/bin",
-                        "/include",
-                        "/lib/*.la"
-                    ]
-                },
-                {
-                     "name": "gdk-pixbuf",
-                     "buildsystem": "autotools",
-                     "config-opts": [
-                         "--disable-docs",
-                         "--disable-static",
-                         "--enable-shared",
-                         "--without-libtiff"
-                    ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.12.tar.xz",
-                            "sha256": "fff85cf48223ab60e3c3c8318e2087131b590fd6f1737e42cb3759a3b427a334"
-                        }
-                    ],
-                    "cleanup": [
-                         "/bin",
-                         "/include"
-                    ]
-                },
-                {
-                    "name": "librsvg",
-                    "config-opts": [
-                        "--disable-docs",
-                        "--disable-static",
-                        "--enable-shared",
-                        "--disable-introspection",
-                        "--disable-vala",
-                        "--disable-pixbuf-loader"
-                    ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://download.gnome.org/sources/librsvg/2.40/librsvg-2.40.20.tar.xz",
-                            "sha256": "cff4dd3c3b78bfe99d8fcfad3b8ba1eee3289a0823c0e118d78106be6b84c92b"
-                        }
-                    ],
-                    "cleanup": [
-                         "/bin",
-                         "/include"
-                    ]
-                },
-                {
                     "name": "imagemagic",
                     "config-opts": [
                         "--with-magick-plus-plus=yes",
@@ -1135,8 +1072,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/openfx-gmic.git",
-                    "tag": "Natron-2.3.15",
-                    "commit": "8805f494b1dbb106b51e128cbf7ee295462591ac"
+                    "tag": "Natron-2.4.0",
+                    "commit": "626699dcbdf1d8328252e7102938f486e5775fa3"
                 },
                 {
                     "type": "file",
@@ -1212,7 +1149,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/Natron.git",
-                    "commit": "513a2491008c152417ae913f8d1ab83e432aa7e3"
+                    "commit": "d3cfd7dcf2cf66cf38b7a9a8709c316adc4de9f0"
                 },
                 {
                     "type": "patch",
@@ -1236,8 +1173,8 @@
                 },
                 {
                     "type": "archive",
-                    "url": "https://github.com/NatronGitHub/OpenColorIO-Configs/archive/Natron-v3.0.tar.gz",
-                    "sha256": "1d760f6a97fa0b44f69bdfe7d8e9949957fe4ccd1389b3059630094649ff249e",
+                    "url": "https://github.com/NatronGitHub/OpenColorIO-Configs/archive/refs/tags/Natron-v2.4.tar.gz",
+                    "sha256": "32f1c2f94d8a31d4e3f855e5e9ef2717872c7873b4a74eb1eac29862fba73d2c",
                     "dest": "./OpenColorIO-Configs"
                 }
             ],
