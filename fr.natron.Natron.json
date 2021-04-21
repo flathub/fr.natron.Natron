@@ -221,8 +221,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/imageworks/OpenColorIO/archive/v1.1.1.tar.gz",
-                    "sha256": "c9b5b9def907e1dafb29e37336b702fff22cc6306d445a13b1621b8a754c14c8"
+                    "url": "https://github.com/AcademySoftwareFoundation/OpenColorIO/archive/refs/tags/v2.0.0.tar.gz",
+                    "sha256": "b407afcbcaecad8409545857796b9b6e27b0be0c85f2b9e7aa7d251bdc3a4416"
                 },
                 {
                     "type": "shell",
@@ -473,8 +473,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/OpenImageIO/oiio/archive/Release-2.1.16.0.tar.gz",
-                    "sha256": "f44e3b3cffe9a8f47395da1ae59e972ecb26adf65f17581e6a489fdcce0cb116"
+                    "url": "https://github.com/OpenImageIO/oiio/archive/refs/tags/v2.2.13.1.tar.gz",
+                    "sha256": "a522cf10fdbb45c75065f59d004cd5e64a7ac75f9d22cbcf6db764997cb3d0c6"
                 }
             ],
             "cleanup": [
@@ -669,6 +669,7 @@
                 "--enable-swscale",
                 "--enable-avfilter",
                 "--enable-avresample",
+                "--enable-libdav1d",
                 "--enable-libmp3lame",
                 "--enable-libvorbis",
                 "--enable-libopus",
