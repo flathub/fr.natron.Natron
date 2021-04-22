@@ -1,7 +1,7 @@
 {
     "app-id": "fr.natron.Natron",
     "runtime": "org.freedesktop.Sdk",
-    "runtime-version": "19.08",
+    "runtime-version": "20.08",
     "sdk": "org.freedesktop.Sdk",
     "command": "Natron",
     "rename-icon": "natronIcon256_linux",
@@ -127,6 +127,52 @@
         ]
     },
     {
+            "name": "shiboken",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_SKIP_RPATH=true",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DBUILD_TESTS=OFF"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/pyside/Shiboken/archive/1.2.4.tar.gz",
+                    "sha256": "1536f73a3353296d97a25e24f9554edf3e6a48126886f8d21282c3645ecb96a4"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/shiboken_gcc6.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/shiboken_memleak-instead-crash.patch"
+                }
+            ],
+            "cleanup": [
+                "/bin",
+                "/include"
+            ]
+        },
+        {
+            "name": "pyside",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DBUILD_TESTS=OFF"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/pyside/PySide/archive/1.2.4.tar.gz",
+                    "sha256": "90f2d736e2192ac69e5a2ac798fce2b5f7bf179269daa2ec262986d488c3b0f7"
+                }
+            ],
+            "cleanup": [
+                "/include"
+            ]
+        },
+    {
             "name": "boost",
             "buildsystem": "simple",
             "build-commands": [
@@ -142,6 +188,291 @@
                 }
             ],
             "cleanup": [
+                "/include"
+            ]
+        },
+        {
+            "name": "libraw",
+            "config-opts": [
+                "--disable-static",
+                "--enable-jasper",
+                "--enable-jpeg",
+                "--enable-demosaic-pack-gpl2"
+            ],
+            "modules": [
+                "shared-modules/openjpeg/openjpeg.json"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://www.libraw.org/data/LibRaw-0.19.2.tar.gz",
+                    "sha256": "400d47969292291d297873a06fb0535ccce70728117463927ddd9452aa849644"
+                },
+                {
+                    "type": "archive",
+                    "url": "https://www.libraw.org/data/LibRaw-demosaic-pack-GPL2-0.18.8.tar.gz",
+                    "sha256": "0b24bcf7bbb5d13fde58bb071f94dc9354be09bc44b2bba0698493065e99f8da",
+                    "dest": "./LibRaw-demosaic-pack-GPL2"
+                }
+            ],
+            "cleanup": [
+                "/bin",
+                "/share/doc",
+                "/include",
+                "/lib/*.la"
+            ]
+        },
+        {
+            "name": "ilmbase",
+            "config-opts": [
+                "--enable-shared",
+                "--disable-static"
+            ],
+            "build-options": {
+                "cxxflags": "-std=c++14",
+                "env": {
+                    "LDFLAGS": "-lpthread"
+                }
+            },
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/openexr/openexr/releases/download/v2.3.0/ilmbase-2.3.0.tar.gz",
+                    "sha256": "456978d1a978a5f823c7c675f3f36b0ae14dba36638aeaa3c4b0e784f12a3862"
+                },
+                {
+                    "type": "shell",
+                    "commands": [
+                        "rm config.guess configure"
+                    ]
+                }
+            ],
+            "cleanup": [
+                "/include/OpenEXR",
+                "/lib/libHalf.la",
+                "/lib/libIex*.la",
+                "/lib/libIlm*.la",
+                "/lib/libImath*.la",
+                "/lib/pkgconfig/IlmBase.pc"
+            ]
+        },
+        {
+            "name": "openexr",
+            "config-opts": [
+                "--enable-shared",
+                "--disable-static"
+            ],
+            "build-options": {
+                "cxxflags": "-std=c++14"
+            },
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/openexr/openexr/releases/download/v2.3.0/openexr-2.3.0.tar.gz",
+                    "sha256": "fd6cb3a87f8c1a233be17b94c74799e6241d50fc5efd4df75c7a4b9cf4e25ea6"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/openexr-no-docs.patch"
+                },
+                {
+                    "type": "shell",
+                    "commands": [
+                        "rm config.guess configure"
+                    ]
+                }
+            ],
+            "cleanup": [
+                "/bin",
+                "/include",
+                "/lib/*.la",
+                "/lib/pkgconfig",
+                "/share/aclocal"
+            ]
+        },
+        {
+            "name": "fmt",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release"
+            ],
+            "cleanup": [
+                "/include",
+                "*.a"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/fmtlib/fmt/archive/5.2.1.tar.gz",
+                    "sha256": "3c812a18e9f72a88631ab4732a97ce9ef5bcbefb3235e9fd465f059ba204359b"
+                }
+            ]
+        },
+        {
+            "name": "robin-map",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/Tessil/robin-map/archive/v0.6.2.tar.gz",
+                    "sha256": "c08ec4b1bf1c85eb0d6432244a6a89862229da1cb834f3f90fba8dc35d8c8ef1"
+                }
+            ],
+            "cleanup": [
+                "/include"
+            ]
+        },
+        {
+            "name": "x265_32",
+            "only-arches": ["i386"],
+            "buildsystem": "simple",
+            "build-commands": [
+                "mkdir source/build-8 source/build-10 source/build-12",
+                "cd source/build-12 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DHIGH_BIT_DEPTH='TRUE' -DMAIN12='TRUE' -DEXPORT_C_API='FALSE' -DENABLE_CLI='FALSE' -DENABLE_SHARED='FALSE'",
+                "cd source/build-12 && make",
+                "cd source/build-10 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DHIGH_BIT_DEPTH='TRUE' -DEXPORT_C_API='FALSE' -DENABLE_CLI='FALSE' -DENABLE_SHARED='FALSE'",
+                "cd source/build-10 && make",
+                "ln -s ../build-10/libx265.a source/build-8/libx265_main10.a",
+                "ln -s ../build-12/libx265.a source/build-8/libx265_main12.a",
+                "cd source/build-8 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DENABLE_SHARED='TRUE'",
+                "cd source/build-8 && make",
+                "cd source/build-8 && make install"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://bitbucket.org/multicoreware/x265/downloads/x265_3.2.1.tar.gz",
+                    "sha256": "fb9badcf92364fd3567f8b5aa0e5e952aeea7a39a2b864387cec31e3b58cbbcc"
+                }
+            ],
+            "cleanup": [
+                "/include"
+            ]
+        },
+        {
+            "name": "x265_64",
+            "skip-arches": ["i386"],
+            "buildsystem": "simple",
+            "build-commands": [
+                "mkdir source/build-8 source/build-10 source/build-12",
+                "cd source/build-12 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DHIGH_BIT_DEPTH='TRUE' -DMAIN12='TRUE' -DEXPORT_C_API='FALSE' -DENABLE_CLI='FALSE' -DENABLE_SHARED='FALSE'",
+                "cd source/build-12 && make",
+                "cd source/build-10 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DHIGH_BIT_DEPTH='TRUE' -DEXPORT_C_API='FALSE' -DENABLE_CLI='FALSE' -DENABLE_SHARED='FALSE'",
+                "cd source/build-10 && make",
+                "ln -s ../build-10/libx265.a source/build-8/libx265_main10.a",
+                "ln -s ../build-12/libx265.a source/build-8/libx265_main12.a",
+                "cd source/build-8 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DENABLE_SHARED='TRUE'",
+                "cd source/build-8 && make",
+                "cd source/build-8 && make install"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/videolan/x265/archive/refs/tags/3.4.tar.gz",
+                    "sha256": "544d147bf146f8994a7bf8521ed878c93067ea1c7c6e93ab602389be3117eaaf"
+                }
+            ],
+            "cleanup": [
+                "/include"
+            ]
+        },
+        {
+            "name" : "libheif",
+            "config-opts": [ "--disable-gdk-pixbuf" ],
+            "cleanup": [ "/bin" ],
+            "modules": [
+                {
+                    "name": "libde265",
+                    "config-opts": [ "--disable-sherlock265" ],
+                    "cleanup": [ "/bin" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.5/libde265-1.0.5.tar.gz",
+                            "sha256": "e3f277d8903408615a5cc34718b391b83c97c646faea4f41da93bac5ee08a87f"
+                        }
+                    ]
+                }
+            ],
+            "sources" : [
+                {
+                    "url" : "https://github.com/strukturag/libheif/archive/refs/tags/v1.11.0.tar.gz",
+                    "sha256" : "993c3320e179b8fdce983e3a7e96615af3830077be6b0ab28bfa25579df08d26",
+                    "type" : "archive"
+                }
+            ]
+        },
+        {
+            "name": "imagemagic",
+            "config-opts": [
+                "--with-magick-plus-plus=yes",
+                "--with-quantum-depth=32",
+                "--without-dps",
+                "--without-djvu",
+                "--without-fftw",
+                "--without-fpx",
+                "--without-gslib",
+                "--without-gvc",
+                "--without-jbig",
+                "--without-jpeg",
+                "--with-lcms",
+                "--without-openjp2",
+                "--without-lqr",
+                "--without-lzma",
+                "--without-openexr",
+                "--with-pango",
+                "--with-png",
+                "--with-rsvg",
+                "--without-tiff",
+                "--without-webp",
+                "--with-xml",
+                "--with-zlib",
+                "--without-bzlib",
+                "--disable-static",
+                "--enable-hdri",
+                "--enable-openmp",
+                "--with-freetype",
+                "--with-fontconfig",
+                "--without-modules",
+                "--without-x"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://www.imagemagick.org/download/releases/ImageMagick-7.0.10-17.tar.xz",
+                    "sha256": "82a304c0527d372d8a8929706165702eebfaadc88762f29ce19168b5bd6bbe1e"
+                }
+            ],
+            "cleanup": [
+                "/bin",
+                "/include",
+                "/lib/*.la"
+            ]
+        },
+        {
+            "name": "poppler-glib",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DENABLE_LIBCURL=OFF",
+                "-DNSS3_FOUND=OFF",
+                "-DENABLE_NSS3=OFF",
+                "-DENABLE_QT5=OFF",
+                "-DENABLE_QT4=OFF",
+                "-DENABLE_GTK_DOC=OFF",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DENABLE_XPDF_HEADERS=ON"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://poppler.freedesktop.org/poppler-0.64.0.tar.xz",
+                    "sha256": "b21df92ca99f78067785cf2dc8e06deb04726b62389c0ee1f5d8b103c77f64b1"
+                }
+            ],
+            "cleanup": [
+                "/bin",
                 "/include"
             ]
         },
@@ -221,7 +552,7 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/imageworks/OpenColorIO/archive/v1.1.1.tar.gz",
+                    "url": "https://github.com/AcademySoftwareFoundation/OpenColorIO/archive/refs/tags/v1.1.1.tar.gz",
                     "sha256": "c9b5b9def907e1dafb29e37336b702fff22cc6306d445a13b1621b8a754c14c8"
                 },
                 {
@@ -237,208 +568,6 @@
                 "/lib/pkgconfig",
                 "/share",
                 "OpenColorIOConfig.cmake"
-            ]
-        },
-        {
-            "name": "shiboken",
-            "buildsystem": "cmake-ninja",
-            "builddir": true,
-            "config-opts": [
-                "-DCMAKE_SKIP_RPATH=true",
-                "-DCMAKE_BUILD_TYPE=Release",
-                "-DBUILD_TESTS=OFF"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/pyside/Shiboken/archive/1.2.4.tar.gz",
-                    "sha256": "1536f73a3353296d97a25e24f9554edf3e6a48126886f8d21282c3645ecb96a4"
-                },
-                {
-                    "type": "patch",
-                    "path": "patches/shiboken_gcc6.patch"
-                },
-                {
-                    "type": "patch",
-                    "path": "patches/shiboken_memleak-instead-crash.patch"
-                }
-            ],
-            "cleanup": [
-                "/bin",
-                "/include"
-            ]
-        },
-        {
-            "name": "pyside",
-            "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DBUILD_TESTS=OFF"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/pyside/PySide/archive/1.2.4.tar.gz",
-                    "sha256": "90f2d736e2192ac69e5a2ac798fce2b5f7bf179269daa2ec262986d488c3b0f7"
-                }
-            ],
-            "cleanup": [
-                "/include"
-            ]
-        },
-        {
-            "name": "ilmbase",
-            "config-opts": [
-                "--enable-shared",
-                "--disable-static"
-            ],
-            "build-options": {
-                "cxxflags": "-std=c++14",
-                "env": {
-                    "LDFLAGS": "-lpthread"
-                }
-            },
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/openexr/openexr/releases/download/v2.3.0/ilmbase-2.3.0.tar.gz",
-                    "sha256": "456978d1a978a5f823c7c675f3f36b0ae14dba36638aeaa3c4b0e784f12a3862"
-                },
-                {
-                    "type": "shell",
-                    "commands": [
-                        "rm config.guess configure"
-                    ]
-                }
-            ],
-            "cleanup": [
-                "/include/OpenEXR",
-                "/lib/libHalf.la",
-                "/lib/libIex*.la",
-                "/lib/libIlm*.la",
-                "/lib/libImath*.la",
-                "/lib/pkgconfig/IlmBase.pc"
-            ]
-        },
-        {
-            "name": "openexr",
-            "config-opts": [
-                "--enable-shared",
-                "--disable-static"
-            ],
-            "build-options": {
-                "cxxflags": "-std=c++14"
-            },
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/openexr/openexr/releases/download/v2.3.0/openexr-2.3.0.tar.gz",
-                    "sha256": "fd6cb3a87f8c1a233be17b94c74799e6241d50fc5efd4df75c7a4b9cf4e25ea6"
-                },
-                {
-                    "type": "patch",
-                    "path": "patches/openexr-no-docs.patch"
-                },
-                {
-                    "type": "shell",
-                    "commands": [
-                        "rm config.guess configure"
-                    ]
-                }
-            ],
-            "cleanup": [
-                "/bin",
-                "/include",
-                "/lib/*.la",
-                "/lib/pkgconfig",
-                "/share/aclocal"
-            ]
-        },
-        {
-            "name": "libraw",
-            "config-opts": [
-                "--disable-static",
-                "--enable-jasper",
-                "--enable-jpeg",
-                "--enable-demosaic-pack-gpl2"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://www.libraw.org/data/LibRaw-0.19.2.tar.gz",
-                    "sha256": "400d47969292291d297873a06fb0535ccce70728117463927ddd9452aa849644"
-                },
-                {
-                    "type": "archive",
-                    "url": "https://www.libraw.org/data/LibRaw-demosaic-pack-GPL2-0.18.8.tar.gz",
-                    "sha256": "0b24bcf7bbb5d13fde58bb071f94dc9354be09bc44b2bba0698493065e99f8da",
-                    "dest": "./LibRaw-demosaic-pack-GPL2"
-                }
-            ],
-            "cleanup": [
-                "/bin",
-                "/share/doc",
-                "/include",
-                "/lib/*.la"
-            ]
-        },
-        {
-            "name" : "libheif",
-            "config-opts": [ "--disable-gdk-pixbuf" ],
-            "cleanup": [ "/bin" ],
-            "modules": [
-                {
-                    "name": "libde265",
-                    "config-opts": [ "--disable-sherlock265" ],
-                    "cleanup": [ "/bin" ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.5/libde265-1.0.5.tar.gz",
-                            "sha256": "e3f277d8903408615a5cc34718b391b83c97c646faea4f41da93bac5ee08a87f"
-                        }
-                    ]
-                }
-            ],
-            "sources" : [
-                {
-                    "url" : "https://github.com/strukturag/libheif/releases/download/v1.6.2/libheif-1.6.2.tar.gz",
-                    "sha256" : "bb229e855621deb374f61bee95c4642f60c2a2496bded35df3d3c42cc6d8eefc",
-                    "type" : "archive"
-                }
-            ]
-        },
-        {
-            "name": "fmt",
-            "buildsystem": "cmake-ninja",
-            "builddir": true,
-            "config-opts": [
-                "-DCMAKE_BUILD_TYPE=Release"
-            ],
-            "cleanup": [
-                "/include",
-                "*.a"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/fmtlib/fmt/archive/5.2.1.tar.gz",
-                    "sha256": "3c812a18e9f72a88631ab4732a97ce9ef5bcbefb3235e9fd465f059ba204359b"
-                }
-            ]
-        },
-        {
-            "name": "robin-map",
-            "buildsystem": "cmake-ninja",
-            "builddir": true,
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/Tessil/robin-map/archive/v0.6.2.tar.gz",
-                    "sha256": "c08ec4b1bf1c85eb0d6432244a6a89862229da1cb834f3f90fba8dc35d8c8ef1"
-                }
-            ],
-            "cleanup": [
-                "/include"
             ]
         },
         {
@@ -467,9 +596,6 @@
                 "-DLIBRAW_PATH=/app/lib/libraw",
                 "-DCMAKE_LIBRARY_PATH=/app/lib"
             ],
-            "modules": [
-                "shared-modules/openjpeg/openjpeg.json"
-            ],
             "sources": [
                 {
                     "type": "archive",
@@ -480,6 +606,39 @@
             "cleanup": [
                 "/bin",
                 "/include"
+            ]
+        },
+        {
+            "name": "seexpr",
+            "buildsystem": "cmake-ninja",
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=release",
+                "-DCMAKE_INSTALL_LIBDIR=lib"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/wdas/SeExpr/archive/v1-2.11.tar.gz",
+                    "sha256": "b1395e1e87bdc75b6abc65ab8c4894b1e04ddb60c6eef277607bb6d44b31a6c2"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/seexpr-nodemos-notests.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/seexpr-fix-inline-error.patch"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/seexpr-fix-cxxflags.patch"
+                }
+            ],
+            "cleanup": [
+                "src/SeExprEditor/generated/",
+                "src/SeExpr/generated/",
+                "/include",
+                "/lib/*.a"
             ]
         },
         {
@@ -498,60 +657,6 @@
             "cleanup": [
                 "/include",
                 "/lib/pkgconfig"
-            ]
-        },
-        {
-            "name": "x265_32",
-            "only-arches": ["i386"],
-            "buildsystem": "simple",
-            "build-commands": [
-                "mkdir source/build-8 source/build-10 source/build-12",
-                "cd source/build-12 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DHIGH_BIT_DEPTH='TRUE' -DMAIN12='TRUE' -DEXPORT_C_API='FALSE' -DENABLE_CLI='FALSE' -DENABLE_SHARED='FALSE'",
-                "cd source/build-12 && make",
-                "cd source/build-10 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DHIGH_BIT_DEPTH='TRUE' -DEXPORT_C_API='FALSE' -DENABLE_CLI='FALSE' -DENABLE_SHARED='FALSE'",
-                "cd source/build-10 && make",
-                "ln -s ../build-10/libx265.a source/build-8/libx265_main10.a",
-                "ln -s ../build-12/libx265.a source/build-8/libx265_main12.a",
-                "cd source/build-8 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DENABLE_SHARED='TRUE'",
-                "cd source/build-8 && make",
-                "cd source/build-8 && make install"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://bitbucket.org/multicoreware/x265/downloads/x265_3.2.1.tar.gz",
-                    "sha256": "fb9badcf92364fd3567f8b5aa0e5e952aeea7a39a2b864387cec31e3b58cbbcc"
-                }
-            ],
-            "cleanup": [
-                "/include"
-            ]
-        },
-        {
-            "name": "x265_64",
-            "skip-arches": ["i386"],
-            "buildsystem": "simple",
-            "build-commands": [
-                "mkdir source/build-8 source/build-10 source/build-12",
-                "cd source/build-12 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DHIGH_BIT_DEPTH='TRUE' -DMAIN12='TRUE' -DEXPORT_C_API='FALSE' -DENABLE_CLI='FALSE' -DENABLE_SHARED='FALSE'",
-                "cd source/build-12 && make",
-                "cd source/build-10 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DHIGH_BIT_DEPTH='TRUE' -DEXPORT_C_API='FALSE' -DENABLE_CLI='FALSE' -DENABLE_SHARED='FALSE'",
-                "cd source/build-10 && make",
-                "ln -s ../build-10/libx265.a source/build-8/libx265_main10.a",
-                "ln -s ../build-12/libx265.a source/build-8/libx265_main12.a",
-                "cd source/build-8 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DENABLE_SHARED='TRUE'",
-                "cd source/build-8 && make",
-                "cd source/build-8 && make install"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://bitbucket.org/multicoreware/x265/downloads/x265_3.2.1.tar.gz",
-                    "sha256": "fb9badcf92364fd3567f8b5aa0e5e952aeea7a39a2b864387cec31e3b58cbbcc"
-                }
-            ],
-            "cleanup": [
-                "/include"
             ]
         },
         {
@@ -669,6 +774,7 @@
                 "--enable-swscale",
                 "--enable-avfilter",
                 "--enable-avresample",
+                "--enable-libdav1d",
                 "--enable-libmp3lame",
                 "--enable-libvorbis",
                 "--enable-libopus",
@@ -707,8 +813,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://www.ffmpeg.org/releases/ffmpeg-4.2.3.tar.xz",
-                    "sha256": "9df6c90aed1337634c1fb026fb01c154c29c82a64ea71291ff2da9aacb9aad31"
+                    "url": "http://www.ffmpeg.org/releases/ffmpeg-4.4.tar.xz",
+                    "sha256": "06b10a183ce5371f915c6bb15b7b1fffbe046e8275099c96affc29e17645d909"
                 }
             ],
             "cleanup": [
@@ -738,46 +844,13 @@
             ]
         },
         {
-            "name": "seexpr",
-            "buildsystem": "cmake-ninja",
-            "config-opts": [
-                "-DCMAKE_BUILD_TYPE=release",
-                "-DCMAKE_INSTALL_LIBDIR=lib"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/wdas/SeExpr/archive/v1-2.11.tar.gz",
-                    "sha256": "b1395e1e87bdc75b6abc65ab8c4894b1e04ddb60c6eef277607bb6d44b31a6c2"
-                },
-                {
-                    "type": "patch",
-                    "path": "patches/seexpr-nodemos-notests.patch"
-                },
-                {
-                    "type": "patch",
-                    "path": "patches/seexpr-fix-inline-error.patch"
-                },
-                {
-                    "type": "patch",
-                    "path": "patches/seexpr-fix-cxxflags.patch"
-                }
-            ],
-            "cleanup": [
-                "src/SeExprEditor/generated/",
-                "src/SeExpr/generated/",
-                "/include",
-                "/lib/*.a"
-            ]
-        },
-        {
             "name": "openfx-io",
             "buildsystem": "simple",
             "sources": [
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/openfx-io.git",
-                    "tag": "Natron-2.3.15"
+                    "tag": "Natron-2.4.0"
                 },
                 {
                     "type": "patch",
@@ -811,8 +884,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/devernay/openfx-misc.git",
-                    "tag": "Natron-2.3.15",
-                    "commit": "80c3f6f249f4aa59d07f88c546260a02c7a6af85"
+                    "tag": "Natron-2.4.0",
+                    "commit": "f4c99c31d0d0a802b7a7cf43c54c19f74fedb9cc"
                 },
                 {
                     "type": "patch",
@@ -859,19 +932,19 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/NatronGitHub/openfx-arena/archive/Natron-2.3.15.tar.gz",
-                    "sha256": "ad4e6e2855d838e7f192fdda587e51c420077ba2834895c37cc0326451aca64f"
+                    "url": "https://github.com/NatronGitHub/openfx-arena/archive/Natron-2.4.0.tar.gz",
+                    "sha256": "bde6839bcb41411153f231cda4ec9bbbd75bcd0719d9bab06e8bbf400d52b02b"
                 },
                 {
                     "type": "archive",
-                    "url": "https://github.com/NatronGitHub/openfx/archive/Natron-2.3.15.tar.gz",
-                    "sha256": "73b770667ae94362ab021e579adc7d2743b01a78a6c4db0010583691a666e87e",
+                    "url": "https://github.com/NatronGitHub/openfx/archive/Natron-2.4.0.tar.gz",
+                    "sha256": "0e7e134b76cfcdc539815609fd3f868529cab08739a69acb687f85a1a98aa66e",
                     "dest": "./OpenFX"
                 },
                 {
                     "type": "archive",
-                    "url": "https://github.com/NatronGitHub/openfx-io/archive/Natron-2.3.15.tar.gz",
-                    "sha256": "096e9af369dfe87fc5a299186b073eb40dc2ecdf971d063ed4a1b444eb4e4693",
+                    "url": "https://github.com/NatronGitHub/openfx-io/archive/Natron-2.4.0.tar.gz",
+                    "sha256": "eb95d489c95674e3ba612bd5e0b3d4b57ec102ca9586c8ff0ddd4267f8f512a8",
                     "dest": "./OpenFX-IO"
                 },
                 {
@@ -985,141 +1058,6 @@
                         "/bin",
                         "/include"
                     ]
-                },
-                {
-                    "name": "poppler-glib",
-                    "buildsystem": "cmake-ninja",
-                    "config-opts": [
-                        "-DENABLE_LIBCURL=OFF",
-                        "-DNSS3_FOUND=OFF",
-                        "-DENABLE_NSS3=OFF",
-                        "-DENABLE_QT5=OFF",
-                        "-DENABLE_QT4=OFF",
-                        "-DENABLE_GTK_DOC=OFF",
-                        "-DCMAKE_BUILD_TYPE=Release",
-                        "-DENABLE_XPDF_HEADERS=ON"
-                    ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://poppler.freedesktop.org/poppler-0.64.0.tar.xz",
-                            "sha256": "b21df92ca99f78067785cf2dc8e06deb04726b62389c0ee1f5d8b103c77f64b1"
-                        }
-                    ],
-                    "cleanup": [
-                        "/bin",
-                        "/include"
-                    ]
-                },
-                {
-                    "name": "cairo",
-                    "config-opts": [
-                        "--with-libpng=yes",
-                        "--enable-static",
-                        "--enable-tee"
-                    ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://www.cairographics.org/releases/cairo-1.14.12.tar.xz",
-                            "sha256": "8c90f00c500b2299c0a323dd9beead2a00353752b2092ead558139bd67f7bf16"
-                        }
-                    ],
-                    "cleanup": [
-                        "/bin",
-                        "/include",
-                        "/lib/*.la"
-                    ]
-                },
-                {
-                     "name": "gdk-pixbuf",
-                     "buildsystem": "autotools",
-                     "config-opts": [
-                         "--disable-docs",
-                         "--disable-static",
-                         "--enable-shared",
-                         "--without-libtiff"
-                    ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.12.tar.xz",
-                            "sha256": "fff85cf48223ab60e3c3c8318e2087131b590fd6f1737e42cb3759a3b427a334"
-                        }
-                    ],
-                    "cleanup": [
-                         "/bin",
-                         "/include"
-                    ]
-                },
-                {
-                    "name": "librsvg",
-                    "config-opts": [
-                        "--disable-docs",
-                        "--disable-static",
-                        "--enable-shared",
-                        "--disable-introspection",
-                        "--disable-vala",
-                        "--disable-pixbuf-loader"
-                    ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://download.gnome.org/sources/librsvg/2.40/librsvg-2.40.20.tar.xz",
-                            "sha256": "cff4dd3c3b78bfe99d8fcfad3b8ba1eee3289a0823c0e118d78106be6b84c92b"
-                        }
-                    ],
-                    "cleanup": [
-                         "/bin",
-                         "/include"
-                    ]
-                },
-                {
-                    "name": "imagemagic",
-                    "config-opts": [
-                        "--with-magick-plus-plus=yes",
-                        "--with-quantum-depth=32",
-                        "--without-dps",
-                        "--without-djvu",
-                        "--without-fftw",
-                        "--without-fpx",
-                        "--without-gslib",
-                        "--without-gvc",
-                        "--without-jbig",
-                        "--without-jpeg",
-                        "--with-lcms",
-                        "--without-openjp2",
-                        "--without-lqr",
-                        "--without-lzma",
-                        "--without-openexr",
-                        "--with-pango",
-                        "--with-png",
-                        "--with-rsvg",
-                        "--without-tiff",
-                        "--without-webp",
-                        "--with-xml",
-                        "--with-zlib",
-                        "--without-bzlib",
-                        "--disable-static",
-                        "--enable-hdri",
-                        "--enable-openmp",
-                        "--with-freetype",
-                        "--with-fontconfig",
-                        "--without-modules",
-                        "--without-x"
-                    ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "https://www.imagemagick.org/download/releases/ImageMagick-7.0.10-17.tar.xz",
-                            "sha256": "82a304c0527d372d8a8929706165702eebfaadc88762f29ce19168b5bd6bbe1e"
-                        }
-                    ],
-                    "cleanup": [
-                        "/bin",
-                        "/include",
-                        "/lib/*.la"
-                    ]
                 }
             ]
         },
@@ -1135,8 +1073,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/openfx-gmic.git",
-                    "tag": "Natron-2.3.15",
-                    "commit": "8805f494b1dbb106b51e128cbf7ee295462591ac"
+                    "tag": "Natron-2.4.0",
+                    "commit": "626699dcbdf1d8328252e7102938f486e5775fa3"
                 },
                 {
                     "type": "file",
@@ -1212,7 +1150,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/NatronGitHub/Natron.git",
-                    "commit": "513a2491008c152417ae913f8d1ab83e432aa7e3"
+                    "commit": "d3cfd7dcf2cf66cf38b7a9a8709c316adc4de9f0"
                 },
                 {
                     "type": "patch",
@@ -1236,8 +1174,8 @@
                 },
                 {
                     "type": "archive",
-                    "url": "https://github.com/NatronGitHub/OpenColorIO-Configs/archive/Natron-v3.0.tar.gz",
-                    "sha256": "1d760f6a97fa0b44f69bdfe7d8e9949957fe4ccd1389b3059630094649ff249e",
+                    "url": "https://github.com/NatronGitHub/OpenColorIO-Configs/archive/refs/tags/Natron-v2.4.tar.gz",
+                    "sha256": "32f1c2f94d8a31d4e3f855e5e9ef2717872c7873b4a74eb1eac29862fba73d2c",
                     "dest": "./OpenColorIO-Configs"
                 }
             ],
