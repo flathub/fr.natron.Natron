@@ -258,9 +258,9 @@
         },
         {
             "name": "openexr",
+            "buildsystem": "cmake-ninja",
             "config-opts": [
-                "--enable-shared",
-                "--disable-static"
+                "-DCMAKE_BUILD_TYPE=Release"
             ],
             "build-options": {
                 "cxxflags": "-std=c++14"
@@ -268,18 +268,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/openexr/openexr/releases/download/v2.3.0/openexr-2.3.0.tar.gz",
-                    "sha256": "fd6cb3a87f8c1a233be17b94c74799e6241d50fc5efd4df75c7a4b9cf4e25ea6"
-                },
-                {
-                    "type": "patch",
-                    "path": "patches/openexr-no-docs.patch"
-                },
-                {
-                    "type": "shell",
-                    "commands": [
-                        "rm config.guess configure"
-                    ]
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v2.5.6.tar.gz",
+                    "sha256": "c9f4c268d91d3904b7784b7a65d1eba55334bddf391487e9f14c315fa3a362b5"
                 }
             ],
             "cleanup": [
