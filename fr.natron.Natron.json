@@ -236,6 +236,9 @@
                     "sha256": "c9f4c268d91d3904b7784b7a65d1eba55334bddf391487e9f14c315fa3a362b5"
                 }
             ],
+            "post-install": [
+                "cp ./IlmBase/IlmBase.pc /app/lib/pkgconfig/"
+            ],
             "cleanup": [
                 "/bin",
                 "/include",
