@@ -813,7 +813,7 @@
                 }
             ],
             "build-commands": [
-                "make CONFIG=release PREFIX-=/app",
+                "make -j$(nproc) CONFIG=release PREFIX-=/app",
                 "make install CONFIG=release DESTDIR=/app"
             ],
             "cleanup": [
