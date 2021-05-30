@@ -223,48 +223,12 @@
             ]
         },
         {
-            "name": "ilmbase",
-            "config-opts": [
-                "--enable-shared",
-                "--disable-static"
-            ],
-            "build-options": {
-                "cxxflags": "-std=c++14",
-                "env": {
-                    "LDFLAGS": "-lpthread"
-                }
-            },
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/openexr/openexr/releases/download/v2.3.0/ilmbase-2.3.0.tar.gz",
-                    "sha256": "456978d1a978a5f823c7c675f3f36b0ae14dba36638aeaa3c4b0e784f12a3862"
-                },
-                {
-                    "type": "shell",
-                    "commands": [
-                        "rm config.guess configure"
-                    ]
-                }
-            ],
-            "cleanup": [
-                "/include/OpenEXR",
-                "/lib/libHalf.la",
-                "/lib/libIex*.la",
-                "/lib/libIlm*.la",
-                "/lib/libImath*.la",
-                "/lib/pkgconfig/IlmBase.pc"
-            ]
-        },
-        {
             "name": "openexr",
             "buildsystem": "cmake-ninja",
             "config-opts": [
-                "-DCMAKE_BUILD_TYPE=Release"
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DOPENEXR_CXX_STANDARD=11"
             ],
-            "build-options": {
-                "cxxflags": "-std=c++14"
-            },
             "sources": [
                 {
                     "type": "archive",
@@ -276,7 +240,6 @@
                 "/bin",
                 "/include",
                 "/lib/*.la",
-                "/lib/pkgconfig",
                 "/share/aclocal"
             ]
         },
@@ -583,7 +546,6 @@
                 "-DLINKSTATIC=0",
                 "-DOpenJpeg_ROOT=/app/",
                 "-DUSE_LIBRAW:BOOL=TRUE",
-                "-DLIBRAW_PATH=/app/lib/libraw",
                 "-DCMAKE_LIBRARY_PATH=/app/lib"
             ],
             "sources": [
