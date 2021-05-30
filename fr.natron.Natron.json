@@ -1057,7 +1057,7 @@
                 }
             ],
             "build-commands": [
-                "make -j${MKJOBS} OPENMP=1 CONFIG=release PREFIX=/app",
+                "make -j$(nproc) OPENMP=1 CONFIG=release PREFIX=/app",
                 "make install CONFIG=release DESTDIR=/app"
             ],
             "modules": [
