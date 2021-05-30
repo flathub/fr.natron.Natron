@@ -833,7 +833,8 @@
             "builddir": true,
             "config-opts": [
                 "-DCMAKE_BUILD_TYPE=Release",
-                "-DCMAKE_INSTALL_PREFIX=/app/Plugins/OFX/Natron"
+                "-DCMAKE_INSTALL_PREFIX=/app/Plugins/OFX/Natron",
+                "-DOpenGL_GL_PREFERENCE=GLVND"
             ],
             "sources": [
                 {
