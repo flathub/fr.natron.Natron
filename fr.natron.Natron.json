@@ -554,8 +554,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/OpenImageIO/oiio/archive/Release-2.1.16.0.tar.gz",
-                    "sha256": "f44e3b3cffe9a8f47395da1ae59e972ecb26adf65f17581e6a489fdcce0cb116"
+                    "url": "https://github.com/OpenImageIO/oiio/archive/refs/tags/v2.2.14.0.tar.gz",
+                    "sha256": "7253bb6819ab6b8960c7c3651e96005a9272a01e344d7832708129d981b16f90"
                 }
             ],
             "cleanup": [
