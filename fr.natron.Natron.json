@@ -287,13 +287,13 @@
             "build-commands": [
                 "mkdir source/build-8 source/build-10 source/build-12",
                 "cd source/build-12 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DHIGH_BIT_DEPTH='TRUE' -DMAIN12='TRUE' -DEXPORT_C_API='FALSE' -DENABLE_CLI='FALSE' -DENABLE_SHARED='FALSE'",
-                "cd source/build-12 && make",
+                "cd source/build-12 && make -j$(nproc)",
                 "cd source/build-10 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DHIGH_BIT_DEPTH='TRUE' -DEXPORT_C_API='FALSE' -DENABLE_CLI='FALSE' -DENABLE_SHARED='FALSE'",
-                "cd source/build-10 && make",
+                "cd source/build-10 && make -j$(nproc)",
                 "ln -s ../build-10/libx265.a source/build-8/libx265_main10.a",
                 "ln -s ../build-12/libx265.a source/build-8/libx265_main12.a",
                 "cd source/build-8 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DENABLE_SHARED='TRUE'",
-                "cd source/build-8 && make",
+                "cd source/build-8 && make -j$(nproc)",
                 "cd source/build-8 && make install"
             ],
             "sources": [
@@ -314,13 +314,13 @@
             "build-commands": [
                 "mkdir source/build-8 source/build-10 source/build-12",
                 "cd source/build-12 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DHIGH_BIT_DEPTH='TRUE' -DMAIN12='TRUE' -DEXPORT_C_API='FALSE' -DENABLE_CLI='FALSE' -DENABLE_SHARED='FALSE'",
-                "cd source/build-12 && make",
+                "cd source/build-12 && make -j$(nproc)",
                 "cd source/build-10 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DHIGH_BIT_DEPTH='TRUE' -DEXPORT_C_API='FALSE' -DENABLE_CLI='FALSE' -DENABLE_SHARED='FALSE'",
-                "cd source/build-10 && make",
+                "cd source/build-10 && make -j$(nproc)",
                 "ln -s ../build-10/libx265.a source/build-8/libx265_main10.a",
                 "ln -s ../build-12/libx265.a source/build-8/libx265_main12.a",
                 "cd source/build-8 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DENABLE_SHARED='TRUE'",
-                "cd source/build-8 && make",
+                "cd source/build-8 && make -j$(nproc)",
                 "cd source/build-8 && make install"
             ],
             "sources": [
