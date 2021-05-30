@@ -887,21 +887,9 @@
             ],
             "sources": [
                 {
-                    "type": "archive",
-                    "url": "https://github.com/NatronGitHub/openfx-arena/archive/Natron-2.4.0.tar.gz",
-                    "sha256": "bde6839bcb41411153f231cda4ec9bbbd75bcd0719d9bab06e8bbf400d52b02b"
-                },
-                {
-                    "type": "archive",
-                    "url": "https://github.com/NatronGitHub/openfx/archive/Natron-2.4.0.tar.gz",
-                    "sha256": "0e7e134b76cfcdc539815609fd3f868529cab08739a69acb687f85a1a98aa66e",
-                    "dest": "./OpenFX"
-                },
-                {
-                    "type": "archive",
-                    "url": "https://github.com/NatronGitHub/openfx-io/archive/Natron-2.4.0.tar.gz",
-                    "sha256": "eb95d489c95674e3ba612bd5e0b3d4b57ec102ca9586c8ff0ddd4267f8f512a8",
-                    "dest": "./OpenFX-IO"
+                    "type": "git",
+                    "url": "https://github.com/NatronGitHub/openfx-arena.git",
+                    "commit": "d5e57fc1574bc5f5ecdc57307d76f7ff9221ea41"
                 },
                 {
                     "type": "archive",
@@ -914,18 +902,6 @@
                     "url": "https://github.com/NatronGitHub/tinydir/archive/1.2.3.tar.gz",
                     "sha256": "e8ba8037d99a23c95b784c2ccbf52e2adb94d6a94f40e2dde19ac75c7d60efa2",
                     "dest": "./OpenFX-IO/IOSupport/SequenceParsing/tinydir/"
-                },
-                {
-                    "type": "archive",
-                    "url": "https://github.com/NatronGitHub/openfx-supportext/archive/Natron-2.3.15.tar.gz",
-                    "sha256": "61824d957bd7fe1e9be69e0225ba70cfeebf67ecf78e109f49139b64cc45df22",
-                    "dest": "./SupportExt"
-                },
-                {
-                    "type": "git",
-                    "url": "https://github.com/lvandeve/lodepng.git",
-                    "commit": "34628e89e80cd007179b25b0b2695e6af0f57fac",
-                    "dest": "./lodepng"
                 },
                 {
                     "type": "patch",
