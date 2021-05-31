@@ -176,15 +176,14 @@
             "name": "boost",
             "buildsystem": "simple",
             "build-commands": [
-                "./bootstrap.sh --prefix=/app --with-libraries=date_time,filesystem,iostreams,python,serialization,locale,regex,system,thread",
-                "./b2 --build-type=minimal link=shared",
-                "./b2 --build-type=minimal link=shared install"
+                "./bootstrap.sh --prefix=/app",
+                "./b2 -s --prefix=/app cflags=-fPIC -j$(nproc) link=shared install threading=multi"
             ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://sourceforge.net/projects/boost/files/boost/1.73.0/boost_1_73_0.tar.bz2",
-                    "sha256": "4eb3b8d442b426dc35346235c8733b5ae35ba431690e38c6a8263dce9fcbb402"
+                    "url": "https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.tar.gz",
+                    "sha256": "aeb26f80e80945e82ee93e5939baebdca47b9dee80a07d3144be1e1a6a66dd6a"
                 }
             ],
             "cleanup": [
@@ -197,7 +196,9 @@
                 "--disable-static",
                 "--enable-jasper",
                 "--enable-jpeg",
-                "--enable-demosaic-pack-gpl2"
+                "--enable-lcms",
+                "--enable-demosaic-pack-gpl2",
+                "--enable-demosaic-pack-gpl3"
             ],
             "modules": [
                 "shared-modules/openjpeg/openjpeg.json"
@@ -205,14 +206,20 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://www.libraw.org/data/LibRaw-0.19.2.tar.gz",
-                    "sha256": "400d47969292291d297873a06fb0535ccce70728117463927ddd9452aa849644"
+                    "url": "https://www.libraw.org/data/LibRaw-0.18.13.tar.gz",
+                    "sha256": "cb1f9d0d1fabc8967d501d95c05d2b53d97a2b917345c66553b1abbea06757ca"
                 },
                 {
                     "type": "archive",
                     "url": "https://www.libraw.org/data/LibRaw-demosaic-pack-GPL2-0.18.8.tar.gz",
                     "sha256": "0b24bcf7bbb5d13fde58bb071f94dc9354be09bc44b2bba0698493065e99f8da",
                     "dest": "./LibRaw-demosaic-pack-GPL2"
+                },
+                {
+                    "type": "archive",
+                    "url": "https://www.libraw.org/data/LibRaw-demosaic-pack-GPL3-0.18.8.tar.gz",
+                    "sha256": "ffd6916cd66c8101e4e6b589799f256c897748d2fd2486aa34c3705146dbc701",
+                    "dest": "./LibRaw-demosaic-pack-GPL3"
                 }
             ],
             "cleanup": [
@@ -223,70 +230,26 @@
             ]
         },
         {
-            "name": "ilmbase",
-            "config-opts": [
-                "--enable-shared",
-                "--disable-static"
-            ],
-            "build-options": {
-                "cxxflags": "-std=c++14",
-                "env": {
-                    "LDFLAGS": "-lpthread"
-                }
-            },
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/openexr/openexr/releases/download/v2.3.0/ilmbase-2.3.0.tar.gz",
-                    "sha256": "456978d1a978a5f823c7c675f3f36b0ae14dba36638aeaa3c4b0e784f12a3862"
-                },
-                {
-                    "type": "shell",
-                    "commands": [
-                        "rm config.guess configure"
-                    ]
-                }
-            ],
-            "cleanup": [
-                "/include/OpenEXR",
-                "/lib/libHalf.la",
-                "/lib/libIex*.la",
-                "/lib/libIlm*.la",
-                "/lib/libImath*.la",
-                "/lib/pkgconfig/IlmBase.pc"
-            ]
-        },
-        {
             "name": "openexr",
+            "buildsystem": "cmake-ninja",
             "config-opts": [
-                "--enable-shared",
-                "--disable-static"
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DOPENEXR_CXX_STANDARD=11"
             ],
-            "build-options": {
-                "cxxflags": "-std=c++14"
-            },
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/openexr/openexr/releases/download/v2.3.0/openexr-2.3.0.tar.gz",
-                    "sha256": "fd6cb3a87f8c1a233be17b94c74799e6241d50fc5efd4df75c7a4b9cf4e25ea6"
-                },
-                {
-                    "type": "patch",
-                    "path": "patches/openexr-no-docs.patch"
-                },
-                {
-                    "type": "shell",
-                    "commands": [
-                        "rm config.guess configure"
-                    ]
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v2.5.6.tar.gz",
+                    "sha256": "c9f4c268d91d3904b7784b7a65d1eba55334bddf391487e9f14c315fa3a362b5"
                 }
+            ],
+            "post-install": [
+                "cp ./IlmBase/IlmBase.pc /app/lib/pkgconfig/"
             ],
             "cleanup": [
                 "/bin",
                 "/include",
                 "/lib/*.la",
-                "/lib/pkgconfig",
                 "/share/aclocal"
             ]
         },
@@ -304,8 +267,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/fmtlib/fmt/archive/5.2.1.tar.gz",
-                    "sha256": "3c812a18e9f72a88631ab4732a97ce9ef5bcbefb3235e9fd465f059ba204359b"
+                    "url": "https://github.com/fmtlib/fmt/archive/refs/tags/7.1.3.tar.gz",
+                    "sha256": "5cae7072042b3043e12d53d50ef404bbb76949dad1de368d7f993a15c8c05ecc"
                 }
             ]
         },
@@ -325,46 +288,18 @@
             ]
         },
         {
-            "name": "x265_32",
-            "only-arches": ["i386"],
+            "name": "x265",
             "buildsystem": "simple",
             "build-commands": [
                 "mkdir source/build-8 source/build-10 source/build-12",
                 "cd source/build-12 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DHIGH_BIT_DEPTH='TRUE' -DMAIN12='TRUE' -DEXPORT_C_API='FALSE' -DENABLE_CLI='FALSE' -DENABLE_SHARED='FALSE'",
-                "cd source/build-12 && make",
+                "cd source/build-12 && make -j$(nproc)",
                 "cd source/build-10 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DHIGH_BIT_DEPTH='TRUE' -DEXPORT_C_API='FALSE' -DENABLE_CLI='FALSE' -DENABLE_SHARED='FALSE'",
-                "cd source/build-10 && make",
+                "cd source/build-10 && make -j$(nproc)",
                 "ln -s ../build-10/libx265.a source/build-8/libx265_main10.a",
                 "ln -s ../build-12/libx265.a source/build-8/libx265_main12.a",
                 "cd source/build-8 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DENABLE_SHARED='TRUE'",
-                "cd source/build-8 && make",
-                "cd source/build-8 && make install"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://bitbucket.org/multicoreware/x265/downloads/x265_3.2.1.tar.gz",
-                    "sha256": "fb9badcf92364fd3567f8b5aa0e5e952aeea7a39a2b864387cec31e3b58cbbcc"
-                }
-            ],
-            "cleanup": [
-                "/include"
-            ]
-        },
-        {
-            "name": "x265_64",
-            "skip-arches": ["i386"],
-            "buildsystem": "simple",
-            "build-commands": [
-                "mkdir source/build-8 source/build-10 source/build-12",
-                "cd source/build-12 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DHIGH_BIT_DEPTH='TRUE' -DMAIN12='TRUE' -DEXPORT_C_API='FALSE' -DENABLE_CLI='FALSE' -DENABLE_SHARED='FALSE'",
-                "cd source/build-12 && make",
-                "cd source/build-10 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DHIGH_BIT_DEPTH='TRUE' -DEXPORT_C_API='FALSE' -DENABLE_CLI='FALSE' -DENABLE_SHARED='FALSE'",
-                "cd source/build-10 && make",
-                "ln -s ../build-10/libx265.a source/build-8/libx265_main10.a",
-                "ln -s ../build-12/libx265.a source/build-8/libx265_main12.a",
-                "cd source/build-8 && cmake .. -DCMAKE_INSTALL_PREFIX=${FLATPAK_DEST} -DENABLE_SHARED='TRUE'",
-                "cd source/build-8 && make",
+                "cd source/build-8 && make -j$(nproc)",
                 "cd source/build-8 && make install"
             ],
             "sources": [
@@ -380,18 +315,31 @@
         },
         {
             "name" : "libheif",
-            "config-opts": [ "--disable-gdk-pixbuf" ],
-            "cleanup": [ "/bin" ],
+            "config-opts": [
+                "--prefix=/app",
+                "--disable-static",
+                "--enable-shared",
+                "--disable-gdk-pixbuf"
+            ],
+            "cleanup": [
+                "/bin"
+            ],
             "modules": [
                 {
                     "name": "libde265",
-                    "config-opts": [ "--disable-sherlock265" ],
-                    "cleanup": [ "/bin" ],
+                    "config-opts": [
+                        "--prefix=/app",
+                        "--disable-static",
+                        "--enable-shared"
+                    ],
+                    "cleanup": [
+                        "/bin"
+                    ],
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.5/libde265-1.0.5.tar.gz",
-                            "sha256": "e3f277d8903408615a5cc34718b391b83c97c646faea4f41da93bac5ee08a87f"
+                            "url": "https://github.com/strukturag/libde265/archive/refs/tags/v1.0.8.tar.gz",
+                            "sha256": "c5ab61185f283f46388c700c43dc08606b0e260cd53f06b967ec0ad7a809ff11"
                         }
                     ]
                 }
@@ -425,6 +373,7 @@
                 "--with-pango",
                 "--with-png",
                 "--with-rsvg",
+                "--with-libheif",
                 "--without-tiff",
                 "--without-webp",
                 "--with-xml",
@@ -462,13 +411,14 @@
                 "-DENABLE_QT4=OFF",
                 "-DENABLE_GTK_DOC=OFF",
                 "-DCMAKE_BUILD_TYPE=Release",
-                "-DENABLE_XPDF_HEADERS=ON"
+                "-DENABLE_XPDF_HEADERS=ON",
+                "-DENABLE_UNSTABLE_API_ABI_HEADERS=ON"
             ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-0.64.0.tar.xz",
-                    "sha256": "b21df92ca99f78067785cf2dc8e06deb04726b62389c0ee1f5d8b103c77f64b1"
+                    "url": "https://poppler.freedesktop.org/poppler-21.05.0.tar.xz",
+                    "sha256": "dafd537b680fad1215bc40fc53d1f38e8449d7c185bc60d5a89e1d26c90dbd8c"
                 }
             ],
             "cleanup": [
@@ -593,14 +543,13 @@
                 "-DLINKSTATIC=0",
                 "-DOpenJpeg_ROOT=/app/",
                 "-DUSE_LIBRAW:BOOL=TRUE",
-                "-DLIBRAW_PATH=/app/lib/libraw",
                 "-DCMAKE_LIBRARY_PATH=/app/lib"
             ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/OpenImageIO/oiio/archive/Release-2.1.16.0.tar.gz",
-                    "sha256": "f44e3b3cffe9a8f47395da1ae59e972ecb26adf65f17581e6a489fdcce0cb116"
+                    "url": "https://github.com/OpenImageIO/oiio/archive/refs/tags/v2.2.14.0.tar.gz",
+                    "sha256": "7253bb6819ab6b8960c7c3651e96005a9272a01e344d7832708129d981b16f90"
                 }
             ],
             "cleanup": [
@@ -650,8 +599,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "http://ftp.videolan.org/pub/x264/snapshots/x264-snapshot-20191217-2245.tar.bz2",
-                    "sha256": "0bb67d095513391e637b3b47e8efc3ba4603c3844f1b4c2690f4d36da7763055"
+                    "url": "https://anduin.linuxfromscratch.org/BLFS/x264/x264-20210211.tar.xz",
+                    "sha256": "519157f61c2a8df585921b9582682d64ce9961b5cd368b709fc7bf22c1cbc617"
                 }
             ],
             "cleanup": [
@@ -858,7 +807,7 @@
                 }
             ],
             "build-commands": [
-                "make CONFIG=release PREFIX-=/app",
+                "make -j$(nproc) CONFIG=release PREFIX-=/app",
                 "make install CONFIG=release DESTDIR=/app"
             ],
             "cleanup": [
@@ -878,7 +827,8 @@
             "builddir": true,
             "config-opts": [
                 "-DCMAKE_BUILD_TYPE=Release",
-                "-DCMAKE_INSTALL_PREFIX=/app/Plugins/OFX/Natron"
+                "-DCMAKE_INSTALL_PREFIX=/app/Plugins/OFX/Natron",
+                "-DOpenGL_GL_PREFERENCE=GLVND"
             ],
             "sources": [
                 {
@@ -931,45 +881,9 @@
             ],
             "sources": [
                 {
-                    "type": "archive",
-                    "url": "https://github.com/NatronGitHub/openfx-arena/archive/Natron-2.4.0.tar.gz",
-                    "sha256": "bde6839bcb41411153f231cda4ec9bbbd75bcd0719d9bab06e8bbf400d52b02b"
-                },
-                {
-                    "type": "archive",
-                    "url": "https://github.com/NatronGitHub/openfx/archive/Natron-2.4.0.tar.gz",
-                    "sha256": "0e7e134b76cfcdc539815609fd3f868529cab08739a69acb687f85a1a98aa66e",
-                    "dest": "./OpenFX"
-                },
-                {
-                    "type": "archive",
-                    "url": "https://github.com/NatronGitHub/openfx-io/archive/Natron-2.4.0.tar.gz",
-                    "sha256": "eb95d489c95674e3ba612bd5e0b3d4b57ec102ca9586c8ff0ddd4267f8f512a8",
-                    "dest": "./OpenFX-IO"
-                },
-                {
-                    "type": "archive",
-                    "url": "https://github.com/NatronGitHub/SequenceParsing/archive/Natron-2.3.15.tar.gz",
-                    "sha256": "9f32af9708578426c1d638bfa9eda6ba4815a36e51a1bf7050c03a4c2d1a6f33",
-                    "dest": "./OpenFX-IO/IOSupport/SequenceParsing/"
-                },
-                {
-                    "type": "archive",
-                    "url": "https://github.com/NatronGitHub/tinydir/archive/1.2.3.tar.gz",
-                    "sha256": "e8ba8037d99a23c95b784c2ccbf52e2adb94d6a94f40e2dde19ac75c7d60efa2",
-                    "dest": "./OpenFX-IO/IOSupport/SequenceParsing/tinydir/"
-                },
-                {
-                    "type": "archive",
-                    "url": "https://github.com/NatronGitHub/openfx-supportext/archive/Natron-2.3.15.tar.gz",
-                    "sha256": "61824d957bd7fe1e9be69e0225ba70cfeebf67ecf78e109f49139b64cc45df22",
-                    "dest": "./SupportExt"
-                },
-                {
                     "type": "git",
-                    "url": "https://github.com/lvandeve/lodepng.git",
-                    "commit": "34628e89e80cd007179b25b0b2695e6af0f57fac",
-                    "dest": "./lodepng"
+                    "url": "https://github.com/NatronGitHub/openfx-arena.git",
+                    "commit": "d5e57fc1574bc5f5ecdc57307d76f7ff9221ea41"
                 },
                 {
                     "type": "patch",
@@ -1102,7 +1016,7 @@
                 }
             ],
             "build-commands": [
-                "make -j${MKJOBS} OPENMP=1 CONFIG=release PREFIX=/app",
+                "make -j$(nproc) OPENMP=1 CONFIG=release PREFIX=/app",
                 "make install CONFIG=release DESTDIR=/app"
             ],
             "modules": [
