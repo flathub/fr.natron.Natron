@@ -370,6 +370,7 @@
                 "--with-pango",
                 "--with-png",
                 "--with-rsvg",
+                "--with-libheif",
                 "--without-tiff",
                 "--without-webp",
                 "--with-xml",
