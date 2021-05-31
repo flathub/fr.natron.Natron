@@ -316,8 +316,10 @@
         {
             "name" : "libheif",
             "config-opts": [
+                "--prefix=/app",
                 "--disable-static",
-                "--enable-shared"
+                "--enable-shared",
+                "--disable-gdk-pixbuf"
             ],
             "cleanup": [
                 "/bin"
@@ -326,6 +328,7 @@
                 {
                     "name": "libde265",
                     "config-opts": [
+                        "--prefix=/app",
                         "--disable-static",
                         "--enable-shared"
                     ],
