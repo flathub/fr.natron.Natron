@@ -315,18 +315,28 @@
         },
         {
             "name" : "libheif",
-            "config-opts": [ "--disable-gdk-pixbuf" ],
-            "cleanup": [ "/bin" ],
+            "config-opts": [
+                "--disable-static",
+                "--enable-shared"
+            ],
+            "cleanup": [
+                "/bin"
+            ],
             "modules": [
                 {
                     "name": "libde265",
-                    "config-opts": [ "--disable-sherlock265" ],
-                    "cleanup": [ "/bin" ],
+                    "config-opts": [
+                        "--disable-static",
+                        "--enable-shared"
+                    ],
+                    "cleanup": [
+                        "/bin"
+                    ],
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.5/libde265-1.0.5.tar.gz",
-                            "sha256": "e3f277d8903408615a5cc34718b391b83c97c646faea4f41da93bac5ee08a87f"
+                            "url": "https://github.com/strukturag/libde265/archive/refs/tags/v1.0.8.tar.gz",
+                            "sha256": "c5ab61185f283f46388c700c43dc08606b0e260cd53f06b967ec0ad7a809ff11"
                         }
                     ]
                 }
