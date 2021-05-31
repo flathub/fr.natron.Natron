@@ -883,18 +883,6 @@
                     "commit": "d5e57fc1574bc5f5ecdc57307d76f7ff9221ea41"
                 },
                 {
-                    "type": "archive",
-                    "url": "https://github.com/NatronGitHub/SequenceParsing/archive/Natron-2.3.15.tar.gz",
-                    "sha256": "9f32af9708578426c1d638bfa9eda6ba4815a36e51a1bf7050c03a4c2d1a6f33",
-                    "dest": "./OpenFX-IO/IOSupport/SequenceParsing/"
-                },
-                {
-                    "type": "archive",
-                    "url": "https://github.com/NatronGitHub/tinydir/archive/1.2.3.tar.gz",
-                    "sha256": "e8ba8037d99a23c95b784c2ccbf52e2adb94d6a94f40e2dde19ac75c7d60efa2",
-                    "dest": "./OpenFX-IO/IOSupport/SequenceParsing/tinydir/"
-                },
-                {
                     "type": "patch",
                     "path": "patches/openfx-arena-plugins-path.patch"
                 }
