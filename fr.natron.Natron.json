@@ -3,7 +3,7 @@
     "runtime": "org.freedesktop.Sdk",
     "runtime-version": "21.08",
     "sdk": "org.freedesktop.Sdk",
-    "command": "Natron",
+    "command": "natron",
     "finish-args": [
             "--share=ipc",
             "--socket=x11",
@@ -17,19 +17,20 @@
             "name": "natron",
             "buildsystem": "simple",
             "build-commands": [
-                "cp -r ./Natron/* /app",
-                "install -Dm644 fr.natron.Natron.appdata.xml /app/share/metainfo/fr.natron.Natron.appdata.xml",
+                "install -Dm755 natron.sh /app/bin/natron",
+                "mv Natron-2.4 /app/natron",
+                "install -Dm644 fr.natron.Natron.appdata.xml /app/share/appdata/fr.natron.Natron.appdata.xml",
                 "install -Dm644 fr.natron.Natron.desktop /app/share/applications/fr.natron.Natron.desktop",
-                "desktop-file-edit --set-icon=$FLATPAK_ID /app/share/applications/${FLATPAK_ID}.desktop",
-                "install -Dm644 /app/Resources/pixmaps/natronIcon256_linux.png /app/share/icons/hicolor/256x256/apps/fr.natron.Natron.png",
-                "install -Dm644 /app/Resources/pixmaps/natronProjectIcon_linux.png /app/share/icons/hicolor/256x256/mimetypes/fr.natron.Natron-project.png"
+                "desktop-file-edit --set-icon=${FLATPAK_ID} /app/share/applications/${FLATPAK_ID}.desktop",
+                "install -Dm644 /app/natron/Resources/pixmaps/natronIcon256_linux.png /app/share/icons/hicolor/256x256/apps/fr.natron.Natron.png",
+                "install -Dm644 /app/natron/Resources/pixmaps/natronProjectIcon_linux.png /app/share/icons/hicolor/256x256/mimetypes/fr.natron.Natron-project.png"
             ],
             "sources": [
                 {
                     "type": "archive",
                     "url": "https://github.com/NatronGitHub/Natron/releases/download/v2.4.0/Natron-2.4.0-Linux-64-no-installer.tar.xz",
                     "sha256": "9de798fbd18abb0fb5b4907971ef6456c4bf12cef5e98744dd781da8f2eae322",
-                    "dest": "./Natron"
+                    "dest": "./Natron-2.4"
                 },
                 {
                     "type": "file",
@@ -38,6 +39,14 @@
                 {
                     "type": "file",
                     "path": "fr.natron.Natron.desktop"
+                },
+                {
+                    "type": "script",
+                    "commands": [
+                        "cd /app/natron",
+                        "exec ./Natron \"$@\""
+                    ],
+                    "dest-filename": "natron.sh"
                 }
             ]
         }
