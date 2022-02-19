@@ -28,8 +28,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/NatronGitHub/Natron/releases/download/v2.4.0/Natron-2.4.0-Linux-64-no-installer.tar.xz",
-                    "sha256": "9de798fbd18abb0fb5b4907971ef6456c4bf12cef5e98744dd781da8f2eae322",
+                    "url": "https://github.com/NatronGitHub/Natron/releases/download/v2.4.3/Natron-2.4.3-Linux-x86_64-no-installer.tar.xz",
+                    "sha256": "ae880afedde2af68a6b9eab87545470438e1aa02a1972051ddbaf76e4e9bc6d1",
                     "dest": "./Natron-2.4"
                 },
                 {
