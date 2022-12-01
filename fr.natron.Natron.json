@@ -1,7 +1,7 @@
 {
     "app-id": "fr.natron.Natron",
     "runtime": "org.freedesktop.Sdk",
-    "runtime-version": "21.08",
+    "runtime-version": "22.08",
     "sdk": "org.freedesktop.Sdk",
     "command": "natron",
     "finish-args": [
@@ -28,8 +28,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/NatronGitHub/Natron/releases/download/v2.4.3/Natron-2.4.3-Linux-x86_64-no-installer.tar.xz",
-                    "sha256": "ae880afedde2af68a6b9eab87545470438e1aa02a1972051ddbaf76e4e9bc6d1",
+                    "url": "https://github.com/NatronGitHub/Natron/releases/download/v2.4.4/Natron-2.4.4-Linux-x86_64-no-installer.tar.xz",
+                    "sha256": "b3cc6fd894c2c9b5750a6d5a92f5576593f0833c52b1b7e5b5b3c8d1ba066bba",
                     "dest": "./Natron-2.4"
                 },
                 {
