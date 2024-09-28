@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>fr.natron.Natron</id>
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_license>GPL-2.0-or-later</project_license>
+    <name>Natron</name>
+    <summary>Compose industry-grade VFX and Motion Graphics.</summary>
+    <developer id="fr.natron">
+        <name>Natron</name>
+    </developer>
+    <description>
+        <p>
+            Natron is a free open-source (GPLv2 license) video compositing software,
+            similar in functionality to Adobe After Effects, Nuke by The Foundry, or Blackmagic Fusion.
+        </p>
+    </description>
+    <launchable type="desktop-id">fr.natron.Natron.desktop</launchable>
+    <content_rating type="oars-1.1" />
+    <url type="homepage">https://natrongithub.github.io</url>
+    <url type="bugtracker">https://github.com/NatronGitHub/Natron/issues</url>
+    <url type="vcs-browser">https://github.com/NatronGitHub/Natron</url>
+    <screenshots>
+        <screenshot type="default">
+            <image>https://upload.wikimedia.org/wikipedia/commons/c/cc/Natron-screenshot-20180619.png</image>
+            <caption>Natron interface</caption>
+        </screenshot>
+    </screenshots>
+    <releases>
+        <release version="2.5.0" date="2022-11-26">
+            <url type="details">https://github.com/NatronGitHub/Natron/releases/tag/v2.5.0/</url>
+            <description>
+            <p>Changes:</p>
+                <ul>
+                <li>Use Python 3 rather than Python 2 (which is not maintained anymore).</li>
+                <li>Use QtPy rather than PySide. QtPy is an abstraction layer for PyQt5/PyQt4/PySide2/PySide (newer versions support PyQt6/PySide6).</li>
+                </ul>
+            <p>Known Issues:</p>
+                <ul>
+                <li>Rendering sometimes silently stalls after X frames.</li>
+                <li>Some image formats may have issues (PCX, PSB)</li>
+                <li>MTS video files are sometimes not read correctly.</li>
+                </ul>
+            </description>
+        </release>
+        <release version="2.5.0" date="2022-11-26"/>
+        <release version="2.4.4" date="2022-11-13"/>
+        <release version="2.4.3" date="2022-02-19"/>
+        <release version="2.4.2" date="2021-12-17"/>
+        <release version="2.4.1" date="2021-10-24"/>
+        <release version="2.4.0" date="2021-04-20"/>
+        <release version="2.3.15" date="2020-06-07"/>
+        <release version="2.3.14" date="2019-06-19"/>
+        <release version="2.3.12" date="2018-05-23"/>
+        <release version="2.3.11" date="2018-05-07"/>
+    </releases>
+</component> 
