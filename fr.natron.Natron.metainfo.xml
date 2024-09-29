@@ -15,6 +15,10 @@
         </p>
     </description>
     <launchable type="desktop-id">fr.natron.Natron.desktop</launchable>
+    <branding>
+        <color type="primary" scheme_preference="light">#ececec</color>
+        <color type="primary" scheme_preference="dark">#282828</color>
+    </branding>
     <content_rating type="oars-1.1" />
     <url type="homepage">https://natrongithub.github.io</url>
     <url type="bugtracker">https://github.com/NatronGitHub/Natron/issues</url>
