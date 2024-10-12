@@ -1,7 +1,7 @@
 {
     "app-id": "fr.natron.Natron",
     "runtime": "org.freedesktop.Sdk",
-    "runtime-version": "22.08",
+    "runtime-version": "24.08",
     "sdk": "org.freedesktop.Sdk",
     "command": "natron",
     "finish-args": [
@@ -14,12 +14,26 @@
     "modules": [
             "shared-modules/glu/glu-9.json",
         {
+            "name": "libxcrypt",
+            "buildsystem": "autotools",
+            "config-opts": [
+                "--enable-obsolete-api=glibc"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/besser82/libxcrypt.git",
+                    "tag": "v4.4.36"
+                }
+            ]
+        },
+        {
             "name": "natron",
             "buildsystem": "simple",
             "build-commands": [
                 "install -Dm755 natron.sh /app/bin/natron",
                 "mv Natron-2.5 /app/natron",
-                "install -Dm644 fr.natron.Natron.appdata.xml /app/share/appdata/fr.natron.Natron.appdata.xml",
+                "install -Dm644 fr.natron.Natron.metainfo.xml /app/share/metainfo/fr.natron.Natron.metainfo.xml",
                 "install -Dm644 fr.natron.Natron.desktop /app/share/applications/fr.natron.Natron.desktop",
                 "desktop-file-edit --set-icon=${FLATPAK_ID} /app/share/applications/${FLATPAK_ID}.desktop",
                 "install -Dm644 /app/natron/Resources/pixmaps/natronIcon256_linux.png /app/share/icons/hicolor/256x256/apps/fr.natron.Natron.png",
@@ -34,7 +48,7 @@
                 },
                 {
                     "type": "file",
-                    "path": "fr.natron.Natron.appdata.xml"
+                    "path": "fr.natron.Natron.metainfo.xml"
                 },
                 {
                     "type": "file",
