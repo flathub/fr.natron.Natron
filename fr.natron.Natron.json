@@ -1,7 +1,7 @@
 {
     "app-id": "fr.natron.Natron",
     "runtime": "org.freedesktop.Sdk",
-    "runtime-version": "24.08",
+    "runtime-version": "26.08",
     "sdk": "org.freedesktop.Sdk",
     "command": "natron",
     "finish-args": [
@@ -23,7 +23,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/besser82/libxcrypt.git",
-                    "tag": "v4.4.36"
+                    "commit": "174c24d6e87aeae631bc0a7bb1ba983cf8def4de"
                 }
             ]
         },
